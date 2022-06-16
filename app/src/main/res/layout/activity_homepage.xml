@@ -31,7 +31,8 @@
             android:layout_width="0sp"
             android:layout_weight="1"
             android:text="Navigate"
-            android:textColor="@color/selectable"
+            android:textColor="@color/selectable_text"
+            android:backgroundTint="@color/selectable_background"
             style="?attr/materialButtonOutlinedStyle"
             app:cornerRadius="0sp"
             />
@@ -43,6 +44,8 @@
             android:layout_width="0sp"
             android:layout_weight="1"
             android:text="Look Around"
+            android:textColor="@color/selectable_text"
+            android:backgroundTint="@color/selectable_background"
             style="?attr/materialButtonOutlinedStyle"
             app:cornerRadius="0sp" />
     </com.google.android.material.button.MaterialButtonToggleGroup>
