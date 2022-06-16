@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Mobile Dev Project</string>
+    <string name="tab_text_1">Directions</string>
+    <string name="tab_text_2">Look Around</string>
+</resources>
