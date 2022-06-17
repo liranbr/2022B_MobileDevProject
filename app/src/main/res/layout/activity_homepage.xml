@@ -71,7 +71,7 @@
             android:id="@+id/textInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/outlined_box"
+            android:background="@drawable/outlined_input_box"
             android:layout_marginHorizontal="30sp"
             app:boxStrokeWidth="0sp"
             app:boxStrokeWidthFocused="0sp"
