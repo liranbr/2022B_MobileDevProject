@@ -66,6 +66,7 @@
             android:text="Where To?"
             android:textSize="20sp" />
 
+        <!-- TODO: remove hint when starting to type -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout"
             android:layout_width="match_parent"
@@ -76,7 +77,8 @@
             app:boxStrokeWidthFocused="0sp"
             app:endIconMode="clear_text">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/TXT_ACV_Search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@android:color/transparent"
@@ -86,12 +88,23 @@
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="30sp"
+            android:paddingBottom="5sp"
+            android:paddingHorizontal="30sp"
+            android:text=""
+            android:textSize="20sp" />
+
+        <!-- TODO: decide on button placement and design -->
         <com.google.android.material.button.MaterialButton
             android:layout_width="match_parent"
             android:layout_height="68sp"
             android:layout_marginHorizontal="60sp"
             android:layout_marginVertical="30sp"
-            android:text="Reach Location First"
+            android:text="No, get me there!"
             android:id="@+id/reach_location"
             app:cornerRadius="10sp"
             app:strokeWidth="1sp"
@@ -101,7 +114,7 @@
             android:layout_width="match_parent"
             android:layout_height="68sp"
             android:layout_marginHorizontal="60sp"
-            android:text="I'm on-site, where next?"
+            android:text="Yes, Where next?"
             android:id="@+id/im_at_location"
             app:cornerRadius="10sp"
             app:strokeWidth="1sp"
