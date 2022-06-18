@@ -21,7 +21,7 @@ public class GPS_Arrival_Activity extends AppCompatActivity {
     ImageView Waze_IMG;
     ImageView Google_Maps_IMG;
     ImageView Moovit_IMG;
-    String destination;
+    String destination = "";
 
     HashMap<String,Double> coordinates = new HashMap<>();
 
@@ -31,33 +31,38 @@ public class GPS_Arrival_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gps_arrival_menu);
         findViews();
-        setCoordinates();
-        setListeners();
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             destination = extras.getString("key0");
             destination_text.setText(destination);
         }
+        setCoordinates();
+        setListeners();
     }
 
     void setCoordinates() {
-        coordinates.put("Afeka_lat", 32.113453);
-        coordinates.put("Afeka_lon", 34.8175554);
+        coordinates.put("Afeka College_lat", 32.113453);
+        coordinates.put("Afeka College_lon", 34.8175554);
     }
 
     void setListeners()
     {
-        Waze_IMG.setOnClickListener((v) -> searchWaze());
+        Double lat = coordinates.get(destination + "_lat");
+        Double lon = coordinates.get(destination + "_lon");
 
-        Google_Maps_IMG.setOnClickListener((v) -> searchGoogleMaps());
+        assert lat != null && lon != null;
 
-        Moovit_IMG.setOnClickListener((v) -> searchMoovit());
+        Waze_IMG.setOnClickListener((v) -> searchWaze(destination, lat, lon));
+
+        Google_Maps_IMG.setOnClickListener((v) -> searchGoogleMaps(destination, lat, lon));
+
+        Moovit_IMG.setOnClickListener((v) -> searchMoovit(destination, lat, lon));
     }
 
-    void searchWaze()
+    void searchWaze(String dst, double lat, double lon)
     {
         try {
-            String url = "https://waze.com/ul?ll=" + coordinates.get("Afeka_lat") + "," + coordinates.get("Afeka_lon") +"&navigate=yes";
+            String url = "https://waze.com/ul?ll=" + lat + "," + lon +"&navigate=yes";
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             startActivity(intent);
         } catch (ActivityNotFoundException ex) {
@@ -66,15 +71,21 @@ public class GPS_Arrival_Activity extends AppCompatActivity {
             startActivity(intent);
         }
     }
-    private void searchMoovit() {
-        String url = "moovit://directions?dest_lat=" + coordinates.get("Afeka_lat") + "&dest_lon=" + coordinates.get("Afeka_lon") + "&dest_name=" + destination;
-        Intent i = new Intent(Intent.ACTION_VIEW);
-        i.setData(Uri.parse(url));
-        startActivity(i);
+    private void searchMoovit(String dst, double lat, double lon) {
+        String url = "moovit://directions?dest_lat=" + lat + "&dest_lon=" + lon + "&dest_name=" + dst;
+        try {
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            startActivity(i);
+        } catch (ActivityNotFoundException e) {
+            // If Moovit is not installed, open it in Google Play:
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.tranzmate"));
+            startActivity(intent);
+        }
     }
 
-    private void searchGoogleMaps() {
-        String url = "https://www.google.com/maps/dir/?api=1&destination=" + coordinates.get("Afeka_lat") + "," + coordinates.get("Afeka_lon");
+    private void searchGoogleMaps(String dst, double lat, double lon) {
+        String url = "https://www.google.com/maps/dir/?api=1&destination=" + lat + "," + lon;
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
         startActivity(i);
