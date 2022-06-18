@@ -29,7 +29,7 @@
         android:paddingVertical="5dp"
         android:paddingHorizontal="10dp"
         android:gravity="center"
-        android:text="Afeka College"
+        android:text="Afeka College PlaceHolder"
         android:textColor="#000000"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -46,12 +46,12 @@
         tools:layout_editor_absoluteX="30dp" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/Waze_IMG"
         android:layout_width="70sp"
         android:layout_height="70sp"
         android:layout_margin="10sp"
         android:src="@drawable/waze_logo"
-        app:layout_constraintBottom_toTopOf="@+id/imageButton5"
+        app:layout_constraintBottom_toTopOf="@+id/Moovit_IMG"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,31 +61,31 @@
         android:backgroundTint="#94a5df" />
 
     <ImageButton
-        android:id="@+id/imageButton5"
+        android:id="@+id/Moovit_IMG"
         android:layout_width="70sp"
         android:layout_height="70sp"
         android:layout_margin="10sp"
         app:srcCompat="@drawable/moovit_logo"
-        app:layout_constraintBottom_toTopOf="@+id/imageButton3"
+        app:layout_constraintBottom_toTopOf="@+id/Google_Maps_IMG"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton"
+        app:layout_constraintTop_toBottomOf="@+id/Waze_IMG"
         android:padding="11sp"
         android:scaleType="fitCenter"
         android:backgroundTint="#94a5df" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/Google_Maps_IMG"
         android:layout_width="70sp"
         android:layout_height="70sp"
         android:layout_margin="10sp"
         app:srcCompat="@drawable/googlemaps_logo"
-        app:layout_constraintBottom_toTopOf="@+id/imageButton3"
+        app:layout_constraintBottom_toTopOf="@+id/Google_Maps_IMG"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton"
+        app:layout_constraintTop_toBottomOf="@+id/Waze_IMG"
         android:padding="11sp"
         android:scaleType="fitCenter"
         android:backgroundTint="#94a5df" />
@@ -100,7 +100,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton3"
+        app:layout_constraintTop_toBottomOf="@+id/Google_Maps_IMG"
         app:strokeColor="#212d64"
         app:strokeWidth="1sp" />
 

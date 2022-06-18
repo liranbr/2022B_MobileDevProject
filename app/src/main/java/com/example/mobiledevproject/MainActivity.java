@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import com.example.mobiledevproject.Utility.AutoSuggestAdapter;
+import com.example.mobiledevproject.Utility.UtilityMethods;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     MaterialButtonToggleGroup toggleGroup;
     AutoCompleteTextView autoCompleteTextView;
     int currentMode = modes.NAVIGATION.ordinal(); // default mode is navigation
+    String destination = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +92,13 @@ public class MainActivity extends AppCompatActivity {
 
     void setListeners()
     {
+        reachLocationBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UtilityMethods.switchActivityWithData(MainActivity.this, GPS_Arrival_Activity.class, destination.split(",")[0]);
+            }
+        });
+
         toggleGroup.addOnButtonCheckedListener((MaterialButtonToggleGroup group, int checkedId, boolean isChecked)-> {
             if (isChecked) {
                 autoCompleteTextView.setText("");
@@ -109,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
             closeKeyboard();
             String selectedItem = (String) parent.getItemAtPosition(position);
             autoCompleteTextView.setText(selectedItem);
+            destination = selectedItem;
             if(currentMode == modes.NAVIGATION.ordinal()) {
                 setPromptState(true);
             }
