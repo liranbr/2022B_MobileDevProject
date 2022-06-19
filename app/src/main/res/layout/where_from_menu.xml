@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WhereFromActivity"
+    android:background="@drawable/outlined_screen"
+    android:padding="50sp">
+
+    <!-- TODO: design the layout -->
+    <TextView
+        android:id="@+id/WhereFrom_TXT_place"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#e7f0f7"
+        android:gravity="center"
+        android:text="Place"
+        android:textColor="#94a5df"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/WhereFrom_BOX_place"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/outlined_text_box"
+        android:gravity="center"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp"
+        android:text="Afeka College PlaceHolder"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/WhereFrom_TXT_place" />
+
+
+    <TextView
+        android:id="@+id/WhereFrom_TXT_destination"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#e7f0f7"
+        android:gravity="center"
+        android:text="Destination"
+        android:textColor="#94a5df"
+        android:layout_marginTop="50sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/WhereFrom_BOX_place" />
+    <TextView
+        android:id="@+id/WhereFrom_BOX_destination"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/outlined_text_box"
+        android:gravity="center"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp"
+        android:text="Afeka College PlaceHolder"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/WhereFrom_TXT_destination" />
+
+    <TextView
+        android:id="@+id/WhereFrom_TXT_current_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#e7f0f7"
+        android:gravity="center"
+        android:text="Where from?"
+        android:textColor="#94a5df"
+        android:layout_marginTop="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/WhereFrom_BOX_destination"/>
+
+    <!-- TODO: remove hint when starting to type -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/WhereFrom_TIL_current_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/outlined_input_box"
+        android:layout_marginHorizontal="30sp"
+        app:boxStrokeWidth="0sp"
+        app:boxStrokeWidthFocused="0sp"
+        app:endIconMode="clear_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/WhereFrom_TXT_current_location">
+
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/WhereFrom_ACTV_current_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/transparent"
+            android:hint="Your current position"
+            android:inputType="text"
+            android:imeOptions="actionUnspecified"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <fragment
+        android:layout_width="300sp"
+        android:layout_height="300sp"
+        app:layout_constraintBottom_toTopOf="@+id/WhereFrom_BTN_next"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/WhereFrom_TIL_current_location"
+        android:visibility="invisible">
+    </fragment>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/WhereFrom_BTN_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start Navigation"
+        app:cornerRadius="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:strokeColor="#212d64"
+        app:strokeWidth="1sp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

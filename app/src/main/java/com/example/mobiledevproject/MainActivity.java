@@ -2,31 +2,18 @@ package com.example.mobiledevproject;
 
 import android.content.Context;
 import android.os.Bundle;
-
 import com.example.mobiledevproject.Utility.AutoSuggestAdapter;
 import com.example.mobiledevproject.Utility.UtilityMethods;
 import com.google.android.material.button.MaterialButtonToggleGroup;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.tabs.TabLayout;
-
-import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
-
-import com.example.mobiledevproject.ui.main.SectionsPagerAdapter;
 import com.google.android.material.textfield.TextInputLayout;
-
 import java.util.ArrayList;
 import java.util.List;
-//import com.example.mobiledevproject.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
     TextView MenuText;
     TextView textView3;
     TextInputLayout textInputLayout;
-    Button reachLocationBTN;
-    Button onSiteBTN;
+    Button reachPlaceBTN;
+    Button atPlaceBTN;
     MaterialButtonToggleGroup toggleGroup;
     AutoCompleteTextView autoCompleteTextView;
     int currentMode = modes.NAVIGATION.ordinal(); // default mode is navigation
@@ -74,12 +61,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void setPromptState(boolean enabled) {
-        reachLocationBTN.setEnabled(enabled);
-        onSiteBTN.setEnabled(enabled);
+        reachPlaceBTN.setEnabled(enabled);
+        atPlaceBTN.setEnabled(enabled);
 
         int visibility = enabled ? View.VISIBLE : View.INVISIBLE;
-        reachLocationBTN.setVisibility(visibility);
-        onSiteBTN.setVisibility(visibility);
+        reachPlaceBTN.setVisibility(visibility);
+        atPlaceBTN.setVisibility(visibility);
 
         if(enabled)
         {
@@ -92,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
     void setListeners()
     {
-        reachLocationBTN.setOnClickListener(new View.OnClickListener() {
+        reachPlaceBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 UtilityMethods.switchActivityWithData(MainActivity.this, GPS_Arrival_Activity.class, destination.split(",")[0]);
@@ -153,8 +140,8 @@ public class MainActivity extends AppCompatActivity {
     {
         MenuText = findViewById(R.id.textView2);
         toggleGroup = findViewById(R.id.toggleButton);
-        reachLocationBTN = findViewById(R.id.reach_location);
-        onSiteBTN = findViewById(R.id.im_at_location);
+        reachPlaceBTN = findViewById(R.id.reach_place);
+        atPlaceBTN = findViewById(R.id.im_at_place);
         autoCompleteTextView = findViewById(R.id.TXT_ACV_Search);
         textInputLayout = findViewById(R.id.textInputLayout);
         textView3 = findViewById(R.id.textView3);

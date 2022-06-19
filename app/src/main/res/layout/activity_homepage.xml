@@ -105,7 +105,7 @@
             android:layout_marginHorizontal="60sp"
             android:layout_marginVertical="30sp"
             android:text="No, get me there!"
-            android:id="@+id/reach_location"
+            android:id="@+id/reach_place"
             app:cornerRadius="10sp"
             app:strokeWidth="1sp"
             app:strokeColor="#212d64"/>
@@ -115,7 +115,7 @@
             android:layout_height="68sp"
             android:layout_marginHorizontal="60sp"
             android:text="Yes, Where next?"
-            android:id="@+id/im_at_location"
+            android:id="@+id/im_at_place"
             app:cornerRadius="10sp"
             app:strokeWidth="1sp"
             app:strokeColor="#212d64"/>

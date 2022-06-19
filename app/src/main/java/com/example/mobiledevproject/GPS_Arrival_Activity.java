@@ -4,7 +4,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,12 +11,11 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.HashMap;
-import java.util.Locale;
 
 public class GPS_Arrival_Activity extends AppCompatActivity {
 
-    TextView destination_text;
-    Button button;
+    TextView place_text;
+    Button next_button;
     ImageView Waze_IMG;
     ImageView Google_Maps_IMG;
     ImageView Moovit_IMG;
@@ -34,7 +32,7 @@ public class GPS_Arrival_Activity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             destination = extras.getString("key0");
-            destination_text.setText(destination);
+            place_text.setText(destination);
         }
         setCoordinates();
         setListeners();
@@ -93,11 +91,11 @@ public class GPS_Arrival_Activity extends AppCompatActivity {
 
     void findViews()
     {
-        destination_text = findViewById(R.id.destination_text);
-        button = findViewById(R.id.button);
-        Waze_IMG = findViewById(R.id.Waze_IMG);
-        Google_Maps_IMG = findViewById(R.id.Google_Maps_IMG);
-        Moovit_IMG = findViewById(R.id.Moovit_IMG);
+        place_text = findViewById(R.id.Arrival_BOX_place);
+        next_button = findViewById(R.id.Arrival_BTN_next);
+        Waze_IMG = findViewById(R.id.Arrival_IMG_waze);
+        Google_Maps_IMG = findViewById(R.id.Arrival_IMG_google_maps);
+        Moovit_IMG = findViewById(R.id.Arrival_IMG_moovit);
 
     }
 

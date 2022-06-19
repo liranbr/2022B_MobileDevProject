@@ -11,18 +11,17 @@
 
     <!-- TODO: design the layout -->
     <TextView
-        android:id="@+id/destination_descriptor"
+        android:id="@+id/Arrival_TXT_place"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30sp"
         android:background="#e7f0f7"
         android:gravity="center"
-        android:text="Location"
-        android:textColor="#94a5df"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Place"
+        android:textColor="#94a5df" />
 
     <TextView
-        android:id="@+id/destination_text"
+        android:id="@+id/Arrival_BOX_place"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/outlined_text_box"
@@ -30,11 +29,10 @@
         android:paddingHorizontal="10dp"
         android:gravity="center"
         android:text="Afeka College PlaceHolder"
-        android:textColor="#000000"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textColor="#000000" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/Arrival_TXT_instruction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20sp"
@@ -42,65 +40,44 @@
         android:gravity="center"
         android:text="Arrive using:"
         android:textColor="#212d64"
-        app:layout_constraintTop_toTopOf="@+id/textView"
         tools:layout_editor_absoluteX="30dp" />
 
     <ImageButton
-        android:id="@+id/Waze_IMG"
+        android:id="@+id/Arrival_IMG_waze"
         android:layout_width="70sp"
         android:layout_height="70sp"
         android:layout_margin="10sp"
         android:src="@drawable/waze_logo"
-        app:layout_constraintBottom_toTopOf="@+id/Moovit_IMG"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
         android:padding="11sp"
         android:scaleType="fitCenter"
         android:backgroundTint="#94a5df" />
 
     <ImageButton
-        android:id="@+id/Moovit_IMG"
+        android:id="@+id/Arrival_IMG_moovit"
         android:layout_width="70sp"
         android:layout_height="70sp"
         android:layout_margin="10sp"
         app:srcCompat="@drawable/moovit_logo"
-        app:layout_constraintBottom_toTopOf="@+id/Google_Maps_IMG"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Waze_IMG"
         android:padding="11sp"
         android:scaleType="fitCenter"
         android:backgroundTint="#94a5df" />
 
     <ImageButton
-        android:id="@+id/Google_Maps_IMG"
+        android:id="@+id/Arrival_IMG_google_maps"
         android:layout_width="70sp"
         android:layout_height="70sp"
         android:layout_margin="10sp"
         app:srcCompat="@drawable/googlemaps_logo"
-        app:layout_constraintBottom_toTopOf="@+id/Google_Maps_IMG"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Waze_IMG"
         android:padding="11sp"
         android:scaleType="fitCenter"
         android:backgroundTint="#94a5df" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button"
+        android:id="@+id/Arrival_BTN_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="I'm here, Where Next?"
         app:cornerRadius="10sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Google_Maps_IMG"
         app:strokeColor="#212d64"
         app:strokeWidth="1sp" />
 
