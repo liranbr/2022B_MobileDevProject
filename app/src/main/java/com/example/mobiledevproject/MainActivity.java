@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     int currentMode = modes.NAVIGATION.ordinal(); // default mode is navigation
     String destination = "";
 
+    public static List<String> locations = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,24 +43,13 @@ public class MainActivity extends AppCompatActivity {
         setListeners();
         setPromptState(false);
 
-        List<String> locations = new ArrayList<>();
+        //List<String> locations = new ArrayList<>();
         createLocationList(locations);
-
-        AutoSuggestAdapter adapter = new AutoSuggestAdapter(this, android.R.layout.simple_list_item_1, locations);
+        //TODO: change this to upload to Firebase to then get it in other places
+        List<String> temp = new ArrayList<>(locations);
+        AutoSuggestAdapter adapter = new AutoSuggestAdapter(this, android.R.layout.simple_list_item_1, temp);
         autoCompleteTextView.setAdapter(adapter);
         autoCompleteTextView.setThreshold(3);
-
-
-        /* // Instantiate tabs and viewpager
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-        ViewPager viewPager = binding.viewPager;
-        viewPager.setAdapter(sectionsPagerAdapter);
-        TabLayout tabs = binding.tabs;
-        tabs.setupWithViewPager(viewPager);
-        */
     }
 
     void setPromptState(boolean enabled) {
@@ -79,12 +71,9 @@ public class MainActivity extends AppCompatActivity {
 
     void setListeners()
     {
-        reachPlaceBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UtilityMethods.switchActivityWithData(MainActivity.this, GPS_Arrival_Activity.class, destination.split(",")[0]);
-            }
-        });
+        reachPlaceBTN.setOnClickListener((v) -> UtilityMethods.switchActivityWithData(MainActivity.this, GPS_Arrival_Activity.class, destination));
+
+        atPlaceBTN.setOnClickListener((v) -> UtilityMethods.switchActivityWithData(MainActivity.this, WhereFromActivity.class, destination));
 
         toggleGroup.addOnButtonCheckedListener((MaterialButtonToggleGroup group, int checkedId, boolean isChecked)-> {
             if (isChecked) {
@@ -102,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         autoCompleteTextView.setOnItemClickListener((parent, view, position, id) -> {
-            closeKeyboard();
+            UtilityMethods.closeKeyboard(MainActivity.this, autoCompleteTextView);
             String selectedItem = (String) parent.getItemAtPosition(position);
             autoCompleteTextView.setText(selectedItem);
             destination = selectedItem;
@@ -132,7 +121,6 @@ public class MainActivity extends AppCompatActivity {
         for(int i = 0; i <= 4; i++) {
             locations.add("Afeka College, class " + (i + 300));
         }
-
     }
 
 
@@ -147,13 +135,9 @@ public class MainActivity extends AppCompatActivity {
         textView3 = findViewById(R.id.textView3);
     }
 
-    private void closeKeyboard()
-    {
-        View view = this.getCurrentFocus();
 
-        if (view != null) {
-            InputMethodManager manager = (InputMethodManager) getSystemService( Context.INPUT_METHOD_SERVICE);
-            manager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
+    //TODO: remove this when FireBase is ready
+    public static List<String> getLocations() {
+        return locations;
     }
 }

@@ -100,6 +100,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <fragment
+        android:id="@+id/WhereFrom_FRAG_map"
         android:layout_width="300sp"
         android:layout_height="300sp"
         app:layout_constraintBottom_toTopOf="@+id/WhereFrom_BTN_next"
