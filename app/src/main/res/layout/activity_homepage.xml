@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#94a5df">
+    android:background="#94a5df"
+    android:orientation="vertical" >
 
     <ImageView
         android:id="@+id/imageView"
@@ -58,12 +59,12 @@
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="30sp"
             android:paddingBottom="5sp"
             android:paddingHorizontal="30sp"
-            android:text="Where To?"
+            android:text="Where to?"
             android:textSize="20sp" />
 
         <!-- TODO: remove hint when starting to type -->
@@ -73,6 +74,11 @@
             android:layout_height="wrap_content"
             android:background="@drawable/outlined_input_box"
             android:layout_marginHorizontal="30sp"
+            android:paddingHorizontal="16dp"
+            android:hint=" "
+            app:expandedHintEnabled="false"
+            app:hintAnimationEnabled="false"
+            android:autofillHints="creditCardNumber"
             app:boxStrokeWidth="0sp"
             app:boxStrokeWidthFocused="0sp"
             app:endIconMode="clear_text">
@@ -81,8 +87,9 @@
                 android:id="@+id/TXT_ACV_Search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:minHeight="51dp"
                 android:backgroundTint="@android:color/transparent"
-                android:hint="Destination"
+                android:hint="Enter your destination"
                 android:inputType="text"
                 android:imeOptions="actionUnspecified"
                 android:maxLines="1" />
@@ -98,27 +105,33 @@
             android:text=""
             android:textSize="20sp" />
 
-        <!-- TODO: decide on button placement and design -->
-        <com.google.android.material.button.MaterialButton
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="68sp"
-            android:layout_marginHorizontal="60sp"
-            android:layout_marginVertical="30sp"
-            android:text="No, get me there!"
-            android:id="@+id/reach_place"
-            app:cornerRadius="10sp"
-            app:strokeWidth="1sp"
-            app:strokeColor="#212d64"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
 
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="match_parent"
-            android:layout_height="68sp"
-            android:layout_marginHorizontal="60sp"
-            android:text="Yes, Where next?"
-            android:id="@+id/im_at_place"
-            app:cornerRadius="10sp"
-            app:strokeWidth="1sp"
-            app:strokeColor="#212d64"/>
+            <!-- TODO: decide on button placement and design -->
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="68sp"
+                android:layout_marginHorizontal="20sp"
+                android:text="No,\nget me there!"
+                android:id="@+id/reach_place"
+                app:cornerRadius="10sp"
+                app:strokeWidth="1sp"
+                app:strokeColor="#212d64"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="68sp"
+                android:layout_marginHorizontal="20sp"
+                android:text="Yes,\nwhere next?"
+                android:id="@+id/im_at_place"
+                app:cornerRadius="10sp"
+                app:strokeWidth="1sp"
+                app:strokeColor="#212d64"/>
+        </LinearLayout>
 
     </LinearLayout>
 

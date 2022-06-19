@@ -54,7 +54,7 @@ public class WhereFromActivity extends AppCompatActivity {
         whereFromACTV.setOnItemClickListener((parent, view, position, id) -> {
             UtilityMethods.closeKeyboard(WhereFromActivity.this, whereFromACTV);
             String selected = (String) parent.getItemAtPosition(position);
-            whereFromPlace.setText(selected);
+            whereFromACTV.setText(selected);
         });
     }
 

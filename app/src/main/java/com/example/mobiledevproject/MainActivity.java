@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(enabled)
         {
-            String question = "Are you at " + autoCompleteTextView.getText().toString().split(",")[0] + "?";
+            String question = "Are you currently at " + autoCompleteTextView.getText().toString().split(",")[0] + "?";
             textView3.setText(question);
         }
         else
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
     void setListeners()
     {
-        reachPlaceBTN.setOnClickListener((v) -> UtilityMethods.switchActivityWithData(MainActivity.this, GPS_Arrival_Activity.class, destination));
+        reachPlaceBTN.setOnClickListener((v) -> UtilityMethods.switchActivityWithData(MainActivity.this, GPSArrivalActivity.class, destination));
 
         atPlaceBTN.setOnClickListener((v) -> UtilityMethods.switchActivityWithData(MainActivity.this, WhereFromActivity.class, destination));
 

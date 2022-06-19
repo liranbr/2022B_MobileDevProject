@@ -15,7 +15,7 @@ import com.example.mobiledevproject.Utility.UtilityMethods;
 
 import java.util.HashMap;
 
-public class GPS_Arrival_Activity extends AppCompatActivity {
+public class GPSArrivalActivity extends AppCompatActivity {
 
     TextView place_text;
     Button next_button;
@@ -51,7 +51,7 @@ public class GPS_Arrival_Activity extends AppCompatActivity {
 
     void setListeners()
     {
-        next_button.setOnClickListener((v) -> UtilityMethods.switchActivityWithData(GPS_Arrival_Activity.this, WhereFromActivity.class, fullDestination));
+        next_button.setOnClickListener((v) -> UtilityMethods.switchActivityWithData(GPSArrivalActivity.this, WhereFromActivity.class, fullDestination));
 
         Double lat = coordinates.get(destination + "_lat");
         Double lon = coordinates.get(destination + "_lon");
