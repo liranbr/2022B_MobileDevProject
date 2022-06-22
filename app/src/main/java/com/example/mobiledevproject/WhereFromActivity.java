@@ -17,7 +17,7 @@ import java.util.List;
 
 public class WhereFromActivity extends AppCompatActivity {
 
-    TextView whereFromPlace;
+    TextView whereFromPlaceQuestion;
     TextView whereFromDestination;
     AutoCompleteTextView whereFromACTV;
 
@@ -37,8 +37,8 @@ public class WhereFromActivity extends AppCompatActivity {
             location = extras.getString("key0");
             place = location.split(",")[0];
             destination = location.split(",")[1];
-
-            whereFromPlace.setText(place);
+            String fromWhereQuestion = "From where in " + place + "?";
+            whereFromPlaceQuestion.setText(fromWhereQuestion);
             whereFromDestination.setText(destination);
         }
 
@@ -73,7 +73,7 @@ public class WhereFromActivity extends AppCompatActivity {
     }
 
     void findViews() {
-        whereFromPlace = findViewById(R.id.WhereFrom_BOX_place);
+        whereFromPlaceQuestion = findViewById(R.id.WhereFrom_TXT_current_location);
         whereFromDestination = findViewById(R.id.WhereFrom_BOX_destination);
         whereFromACTV = findViewById(R.id.WhereFrom_ACTV_current_location);
     }

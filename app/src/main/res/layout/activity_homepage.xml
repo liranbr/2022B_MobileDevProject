@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#94a5df"
+    android:background="@color/medium"
     android:orientation="vertical" >
 
     <ImageView
@@ -17,7 +17,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#e7f0f7"
+        android:background="@color/light"
         android:layout_margin="10sp"
         android:orientation="vertical">
 
@@ -36,7 +36,7 @@
                 android:insetBottom="0sp"
                 android:layout_width="0sp"
                 android:layout_weight="1"
-                android:text="Navigate"
+                android:text="Directions"
                 android:textColor="@color/selectable_text"
                 android:backgroundTint="@color/selectable_background"
                 app:strokeWidth="0sp"
@@ -67,7 +67,6 @@
             android:text="Where to?"
             android:textSize="20sp" />
 
-        <!-- TODO: remove hint when starting to type -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout"
             android:layout_width="match_parent"
@@ -102,35 +101,38 @@
             android:paddingTop="30sp"
             android:paddingBottom="5sp"
             android:paddingHorizontal="30sp"
-            android:text=""
-            android:textSize="20sp" />
+            android:text="Are you there yet [PlaceHolder]"
+            android:textSize="20sp"
+            android:enabled="false" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
 
             <!-- TODO: decide on button placement and design -->
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/reach_place"
                 android:layout_width="wrap_content"
                 android:layout_height="68sp"
                 android:layout_marginHorizontal="20sp"
+                android:enabled="false"
                 android:text="No,\nget me there!"
-                android:id="@+id/reach_place"
                 app:cornerRadius="10sp"
-                app:strokeWidth="1sp"
-                app:strokeColor="#212d64"/>
+                app:strokeColor="@color/dark"
+                app:strokeWidth="1sp" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/im_at_place"
                 android:layout_width="wrap_content"
                 android:layout_height="68sp"
                 android:layout_marginHorizontal="20sp"
+                android:enabled="false"
                 android:text="Yes,\nwhere next?"
-                android:id="@+id/im_at_place"
                 app:cornerRadius="10sp"
-                app:strokeWidth="1sp"
-                app:strokeColor="#212d64"/>
+                app:strokeColor="@color/dark"
+                app:strokeWidth="1sp" />
         </LinearLayout>
 
     </LinearLayout>
