@@ -1,9 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".NavigationActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NavigationActivity">
+    android:background="@color/medium"
+    android:orientation="vertical"
+    android:id="@+id/Navigation_LLO_screen">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+<!--TODO: programmatic aspect ratio 16:9-->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="231sp"
+        android:adjustViewBounds="true"
+        android:background="@color/med_darker" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:layout_width="50sp"
+            android:layout_height="0sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageView2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="250sp"
+            android:layout_height="250sp"
+            android:background="@color/med_dark"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="199sp"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:layout_width="0sp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:layout_width="0sp"
+            android:layout_height="match_parent"
+            android:layout_weight="3" />
+
+        <ImageButton
+            android:layout_width="0sp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+    </LinearLayout>
+</LinearLayout>
