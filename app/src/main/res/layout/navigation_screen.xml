@@ -26,16 +26,13 @@
             android:backgroundTint="@color/dark"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
         <ImageButton
             android:id="@+id/Navigation_IMGBTN_back"
             android:layout_width="50sp"
             android:layout_height="50sp"
             android:backgroundTint="@color/dark"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
-
+            app:layout_constraintEnd_toEndOf="parent" />
         <com.google.android.material.button.MaterialButtonToggleGroup
             android:id="@+id/materialButtonToggleGroup"
             android:layout_width="50sp"
@@ -52,8 +49,6 @@
                 android:backgroundTint="@color/dark"
                 android:text="0"
                 android:textColor="@color/light" />
-
-
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
         <ImageView
@@ -76,12 +71,10 @@
             android:layout_width="0sp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
-
         <ImageButton
             android:layout_width="0sp"
             android:layout_height="match_parent"
             android:layout_weight="3" />
-
         <ImageButton
             android:layout_width="0sp"
             android:layout_height="match_parent"
