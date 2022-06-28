@@ -6,23 +6,30 @@ import com.example.mobiledevproject.Utility.AutoSuggestAdapter;
 import com.example.mobiledevproject.Utility.UtilityMethods;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
+
+
+    final FirebaseAuth auth = FirebaseAuth.getInstance();
 
     enum modes {
         NAVIGATION,
         LOOKAROUND
     }
-//    private ActivityMainBinding binding;
     TextView loginTXT;
     TextView MenuText;
     TextView textView3;
@@ -40,17 +47,31 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
+
+        auth.signOut(); //just for presentation purposes, to clear the user's data
+
         findViews();
         setListeners();
         setPromptState(false);
 
-        //List<String> locations = new ArrayList<>();
         createLocationList(locations);
         //TODO: change this to upload to Firebase to then get it in other places
         List<String> temp = new ArrayList<>(locations);
         AutoSuggestAdapter adapter = new AutoSuggestAdapter(this, android.R.layout.simple_list_item_1, temp);
         autoCompleteTextView.setAdapter(adapter);
         autoCompleteTextView.setThreshold(3);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+        if(auth.getCurrentUser() != null) {
+            loginTXT.setText(String.format("Welcome %s", Objects.requireNonNull(auth.getCurrentUser().getEmail()).split("@")[0]));
+            loginTXT.setTextColor(ContextCompat.getColor(this, R.color.dark));
+            loginTXT.setOnClickListener(null);
+        }
     }
 
     void setPromptState(boolean enabled) {
@@ -144,4 +165,5 @@ public class MainActivity extends AppCompatActivity {
     public static List<String> getLocations() {
         return locations;
     }
+
 }
