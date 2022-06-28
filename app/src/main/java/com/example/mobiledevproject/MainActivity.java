@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         setPromptState(false);
 
         createLocationList(locations);
-        //TODO: change this to upload to Firebase to then get it in other places
+        //TODO: change this to download from Firebase
         List<String> temp = new ArrayList<>(locations);
         AutoSuggestAdapter adapter = new AutoSuggestAdapter(this, android.R.layout.simple_list_item_1, temp);
         autoCompleteTextView.setAdapter(adapter);

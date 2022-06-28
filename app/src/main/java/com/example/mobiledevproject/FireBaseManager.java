@@ -19,7 +19,7 @@ public class FireBaseManager {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 //TODO: handle success
-
+                return;
                 // Sign in success, update UI with the signed-in user's information
                 //updateUI(user);
             } else {

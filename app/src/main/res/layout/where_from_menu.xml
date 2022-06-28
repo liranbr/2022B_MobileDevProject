@@ -57,6 +57,7 @@
         android:background="@color/light"
         android:gravity="center"
         android:text="From where in [PlaceHolder]?"
+        android:textColor="@color/dark"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/WhereFrom_TIL_current_location"
         app:layout_constraintTop_toBottomOf="@id/WhereFrom_LLO_top" />
@@ -102,9 +103,10 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/WhereFrom_BTN_next"
+        android:text="Start Navigation"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start Navigation"
         app:cornerRadius="10sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

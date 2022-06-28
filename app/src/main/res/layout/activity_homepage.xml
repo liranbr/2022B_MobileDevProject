@@ -65,6 +65,7 @@
             android:paddingBottom="5sp"
             android:paddingHorizontal="30sp"
             android:text="Where to?"
+            android:textColor="@color/dark"
             android:textSize="20sp" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -102,6 +103,7 @@
             android:paddingBottom="5sp"
             android:paddingHorizontal="30sp"
             android:text="Are you there yet [PlaceHolder]"
+            android:textColor="@color/dark"
             android:textSize="20sp"
             android:enabled="false" />
 

@@ -4,26 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    android:background="@drawable/outlined_screen"
+    tools:context=".LoginActivity"
+    android:padding="40sp">
 
 
     <EditText
         android:id="@+id/Login_ET_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10sp"
-        android:background="@color/med_dark"
-        android:gravity="center"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        android:padding="10sp"
-        android:textAlignment="center"
-        android:textColor="@color/light"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="10dp"
-        />
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/outlined_input_box"
+        android:padding="14sp"
+        android:textColor="@color/dark"
+        android:textSize="16sp"
+        android:imeOptions="actionGo"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/Login_TV_error"
@@ -38,26 +36,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Login_ET_email"
         android:enabled="false"
-        android:visibility="invisible"/>
+        android:visibility="invisible" />
 
     <EditText
         android:id="@+id/Login_ET_password"
+        android:hint="Password"
+        android:inputType="textPassword"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10sp"
-        android:background="@color/med_dark"
-        android:gravity="center"
-        android:hint="Password"
-        android:inputType="text"
-        android:padding="10sp"
-        android:textAlignment="center"
-        android:textColor="@color/light"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:background="@drawable/outlined_input_box"
+        android:padding="14sp"
+        android:textColor="@color/dark"
+        android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@+id/Login_TV_error"
-        tools:layout_editor_absoluteX="10dp"
         android:visibility="invisible"
-        android:enabled="false"/>
+        android:imeOptions="actionGo"
+        android:enabled="false" />
 
     <TextView
         android:id="@+id/Login_TV_error2"
@@ -72,21 +67,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Login_ET_password"
         android:enabled="false"
-        android:visibility="invisible"/>
+        android:visibility="invisible" />
 
     <Button
         android:id="@+id/Login_BTN_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10sp"
-        android:background="@color/med_dark"
-        android:gravity="center"
         android:text="Next"
-        android:textColor="@color/light"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/Login_TV_error2"
-        tools:layout_editor_absoluteX="10dp" />
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cornerRadius="10sp"
+        app:strokeColor="@color/dark"
+        app:strokeWidth="1sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Login_TV_error2" />
 
 
 
