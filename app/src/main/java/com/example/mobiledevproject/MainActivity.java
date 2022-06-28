@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         LOOKAROUND
     }
 //    private ActivityMainBinding binding;
+    TextView loginTXT;
     TextView MenuText;
     TextView textView3;
     TextInputLayout textInputLayout;
@@ -109,6 +110,8 @@ public class MainActivity extends AppCompatActivity {
             setPromptState(false);
         });
 
+        loginTXT.setOnClickListener((v) -> UtilityMethods.switchActivity(MainActivity.this, LoginActivity.class));
+
     }
 
     void createLocationList(List<String> locations)
@@ -133,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
         autoCompleteTextView = findViewById(R.id.TXT_ACV_Search);
         textInputLayout = findViewById(R.id.textInputLayout);
         textView3 = findViewById(R.id.textView3);
+        loginTXT = findViewById(R.id.Main_TXT_Login);
     }
 
 
