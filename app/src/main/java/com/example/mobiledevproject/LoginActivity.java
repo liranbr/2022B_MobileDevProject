@@ -71,6 +71,9 @@ public class LoginActivity extends AppCompatActivity {
                                             passError.setVisibility(View.VISIBLE);
                                             passError.setText(task1.getException().getMessage());
                                         }
+                                        else {
+                                            Log.d("Error: ", ((FirebaseAuthException) task1.getException()).getErrorCode() + task1.getException().getMessage());
+                                        }
                                 }
                             });
                         });
