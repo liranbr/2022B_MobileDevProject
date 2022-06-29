@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 public class FireBaseManager {
@@ -55,12 +56,10 @@ public class FireBaseManager {
                 acv.setAdapter(new AutoSuggestAdapter(acv.getContext(),android.R.layout.simple_list_item_1, pois));
                 acv.setThreshold(3);
 
-                HashMap<String,Waypoint> wpMap = location.getWaypoints();
-                Log.d("Tagu", wpMap.toString());
+                HashMap<String,List<String>> wpMap = location.getWaypoints();
                 for(String wpID : wpMap.keySet()) {
-                    waypoints.add(wpMap.get(wpID));
+                    waypoints.add(new Waypoint(wpID, Objects.requireNonNull(wpMap.get(wpID)).toArray(new String[0])));
                 }
-                Log.d("Tagu", waypoints.toString());
             }
         });
     }

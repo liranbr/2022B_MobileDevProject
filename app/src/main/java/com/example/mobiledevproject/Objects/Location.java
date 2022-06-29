@@ -4,22 +4,23 @@ import com.google.type.LatLng;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 
 public class Location implements Serializable {
 
-    HashMap<String,Waypoint> Waypoints = new HashMap<>();
+    HashMap<String, List<String>> Waypoints = new HashMap<>();
     HashMap<String,String> POIs = new HashMap<>(); //POI name -> waypoint ID
 //    LatLng entrance;
 
     public Location() {}
 
-    public Location(HashMap<String,Waypoint> waypoints, HashMap<String,String> POIs, LatLng entrance) {
+    public Location(HashMap<String,List<String>> waypoints, HashMap<String,String> POIs, LatLng entrance) {
         this.Waypoints = waypoints;
         this.POIs = POIs;
         //this.entrance = entrance;
     }
 
-    public HashMap<String,Waypoint> getWaypoints() {
+    public HashMap<String,List<String>> getWaypoints() {
         return Waypoints;
     }
 
@@ -31,7 +32,7 @@ public class Location implements Serializable {
 //        return entrance;
 //    }
 
-    public void setWaypoints(HashMap<String,Waypoint> waypoints) {
+    public void setWaypoints(HashMap<String,List<String>> waypoints) {
         this.Waypoints = waypoints;
     }
 

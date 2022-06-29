@@ -11,6 +11,7 @@ import com.google.android.material.button.MaterialButtonToggleGroup;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
@@ -135,22 +136,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    void createLocationList(List<String> locations)
-    {
-        Location afeka = new Location();
-
-
-        for (int i = 0; i <= 9; i++) {
-            locations.add("Afeka College, class " + (i + 100));
-            locations.add("Afeka College, class " + (i + 200));
-        }
-
-        for(int i = 0; i <= 4; i++) {
-            locations.add("Afeka College, class " + (i + 300));
-        }
-    }
-
-
     void findViews()
     {
         MenuText = findViewById(R.id.textView2);
@@ -166,5 +151,7 @@ public class MainActivity extends AppCompatActivity {
     public static List<String> getLocations() {
         return locations;
     }
+
+    public static List<Waypoint> getWaypoints() { return waypoints; }
 
 }
