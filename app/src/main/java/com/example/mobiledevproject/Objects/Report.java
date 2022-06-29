@@ -1,9 +1,13 @@
 package com.example.mobiledevproject.Objects;
 
-public class Report {
+import java.io.Serializable;
+
+public class Report  implements Serializable {
 
     String reporterEmail;
     String text;
     String imageName;
     int waypointId;
+
+    public Report() {}
 }

@@ -2,6 +2,9 @@ package com.example.mobiledevproject;
 
 import android.content.Context;
 import android.os.Bundle;
+
+import com.example.mobiledevproject.Objects.Location;
+import com.example.mobiledevproject.Objects.Waypoint;
 import com.example.mobiledevproject.Utility.AutoSuggestAdapter;
 import com.example.mobiledevproject.Utility.UtilityMethods;
 import com.google.android.material.button.MaterialButtonToggleGroup;
@@ -20,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     String destination = "";
 
     public static List<String> locations = new ArrayList<>();
+    public static List<Waypoint> waypoints = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,13 +58,7 @@ public class MainActivity extends AppCompatActivity {
         findViews();
         setListeners();
         setPromptState(false);
-
-        createLocationList(locations);
-        //TODO: change this to download from Firebase
-        List<String> temp = new ArrayList<>(locations);
-        AutoSuggestAdapter adapter = new AutoSuggestAdapter(this, android.R.layout.simple_list_item_1, temp);
-        autoCompleteTextView.setAdapter(adapter);
-        autoCompleteTextView.setThreshold(3);
+        FireBaseManager.getLocation("Afeka", autoCompleteTextView, locations, waypoints);
     }
 
     @Override
@@ -122,7 +121,8 @@ public class MainActivity extends AppCompatActivity {
             }
             else if(currentMode == modes.LOOKAROUND.ordinal())
             {
-                //TODO: switch to lookaround view
+                //TODO: check if need to send data here
+                UtilityMethods.switchActivity(MainActivity.this, NavigationActivity.class);
             }
         });
 
@@ -137,6 +137,9 @@ public class MainActivity extends AppCompatActivity {
 
     void createLocationList(List<String> locations)
     {
+        Location afeka = new Location();
+
+
         for (int i = 0; i <= 9; i++) {
             locations.add("Afeka College, class " + (i + 100));
             locations.add("Afeka College, class " + (i + 200));
@@ -160,8 +163,6 @@ public class MainActivity extends AppCompatActivity {
         loginTXT = findViewById(R.id.Main_TXT_Login);
     }
 
-
-    //TODO: remove this when FireBase is ready
     public static List<String> getLocations() {
         return locations;
     }
