@@ -1,6 +1,7 @@
 package com.example.mobiledevproject;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -48,59 +49,84 @@ public class LoginActivity extends AppCompatActivity {
         email.setOnKeyListener((v, keyCode, event) -> {
             emailError.setVisibility(View.INVISIBLE);
             passError.setVisibility(View.INVISIBLE);
-
             return false;
         });
+
+        View.OnClickListener registerListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!password.getText().toString().equals("")) {
+                    auth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString()).addOnCompleteListener(task1 -> {
+                        if (task1.isSuccessful()) {
+                            finish();
+                        } else {
+                            String errorCode = ((FirebaseAuthException) task1.getException()).getErrorCode();
+                            if (errorCode.equals("ERROR_WEAK_PASSWORD")) {
+                                password.setError(task1.getException().getMessage());
+                            }
+                            else {
+                                Log.d("Error: ", ((FirebaseAuthException) task1.getException()).getErrorCode() + task1.getException().getMessage());
+                            }
+                        }
+                    });
+                }
+
+            }
+        };
+
+        View.OnClickListener loginListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!password.getText().toString().equals("")) {
+                    auth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString()).addOnCompleteListener(task1 -> {
+                        if (task1.isSuccessful()) {
+                            finish();
+                        } else {
+
+                            String errorCode = ((FirebaseAuthException) task1.getException()).getErrorCode();
+                            Log.d(errorCode, task1.getException().getMessage());
+
+                            if(errorCode.equals("ERROR_WRONG_PASSWORD")) {
+                                password.setError(task1.getException().getMessage());
+                            }
+                        }
+                    });
+                }
+            }
+        };
 
         View.OnClickListener listener = new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 if (email.getText() != null && !email.getText().toString().equals("")) {
-                    passError.setVisibility(View.INVISIBLE);
-                    emailError.setVisibility(View.INVISIBLE);
                     auth.fetchSignInMethodsForEmail(email.getText().toString()).addOnCompleteListener(task -> {
                         if(task.isSuccessful()) {
+                            email.setEnabled(false);
+                            email.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.medium));
                             boolean isNewUser = Objects.requireNonNull(task.getResult().getSignInMethods()).isEmpty();
                             password.setEnabled(true);
                             password.setVisibility(android.view.View.VISIBLE);
                             if (isNewUser) {
                                 btn.setText("Register");
-                                btn.setOnClickListener(v1 -> {
-                                    if (!password.getText().toString().equals("")) {
-                                        auth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString()).addOnCompleteListener(task1 -> {
-                                            if (task1.isSuccessful()) {
-                                                finish();
-                                            } else {
-                                                String errorCode = ((FirebaseAuthException) task1.getException()).getErrorCode();
-                                                if (errorCode.equals("ERROR_WEAK_PASSWORD")) {
-                                                    passError.setVisibility(View.VISIBLE);
-                                                    passError.setText(task1.getException().getMessage());
-                                                }
-                                                else {
-                                                    Log.d("Error: ", ((FirebaseAuthException) task1.getException()).getErrorCode() + task1.getException().getMessage());
-                                                }
-                                            }
-                                        });
-                                    }
+                                btn.setOnClickListener(registerListener);
+                                password.setOnEditorActionListener((v1, actionId, event) -> {
+                                    registerListener.onClick(v1);
+                                    return false;
+                                });
+                                email.setOnEditorActionListener((v1, actionId, event) -> {
+                                    registerListener.onClick(v1);
+                                    return false;
                                 });
                             } else {
                                 btn.setText("Login");
-                                btn.setOnClickListener(v1 -> {
-                                    if (!password.getText().toString().equals("")) {
-                                        auth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString()).addOnCompleteListener(task1 -> {
-                                            if (task1.isSuccessful()) {
-                                                finish();
-                                            } else {
-                                                String errorCode = ((FirebaseAuthException) task1.getException()).getErrorCode();
-                                                Log.d(errorCode, task1.getException().getMessage());
-
-                                                if(errorCode.equals("ERROR_WRONG_PASSWORD")) {
-                                                    passError.setText(task1.getException().getMessage());
-                                                    passError.setVisibility(android.view.View.VISIBLE);
-                                                }
-                                            }
-                                        });
-                                    }
+                                btn.setOnClickListener(loginListener);
+                                password.setOnEditorActionListener((v1, actionId, event) -> {
+                                    loginListener.onClick(v1);
+                                    return false;
+                                });
+                                email.setOnEditorActionListener((v1, actionId, event) -> {
+                                    loginListener.onClick(v1);
+                                    return false;
                                 });
                             }
                         }
@@ -114,6 +140,9 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         };
+
+        btn.setOnClickListener(listener);
+
         email.setOnEditorActionListener((v, actionId, event) -> {
             listener.onClick(v);
             return true;
@@ -122,6 +151,6 @@ public class LoginActivity extends AppCompatActivity {
             listener.onClick(v);
             return true;
         });
-        btn.setOnClickListener(listener);
+
     }
 }
