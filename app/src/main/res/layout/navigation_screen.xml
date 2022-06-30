@@ -44,7 +44,8 @@
             app:layout_constraintEnd_toStartOf="@+id/Navigation_IMG_Floor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:singleSelection="true">
+            app:singleSelection="true"
+            app:selectionRequired="true">
 
 <!--            <com.google.android.material.button.MaterialButton-->
 <!--                android:layout_width="wrap_content"-->

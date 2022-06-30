@@ -40,8 +40,8 @@ public class WhereFromActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             location = extras.getString("key0");
-            place = location.split(",")[0];
-            destination = location.split(",")[1];
+            place = location.split(", ")[0];
+            destination = location.split(", ")[1];
             String fromWhereQuestion = "From where in " + place + "?";
             whereFromPlaceQuestion.setText(fromWhereQuestion);
             whereFromDestination.setText(destination);
@@ -83,7 +83,7 @@ public class WhereFromActivity extends AppCompatActivity {
                 UtilityMethods.switchActivityWithData(
                         WhereFromActivity.this,
                         NavigationActivity.class,
-                        fromWhere.split(",")[1],
+                        fromWhere.split(", ")[1],
                         destination);
             else
                 whereFromACTV.setError("Please select a location");

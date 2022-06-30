@@ -33,7 +33,11 @@ public class NavigationActivity extends AppCompatActivity {
     MaterialButtonToggleGroup toggleGroup;
 
     String fromWhere = "";
+    String fromWhereId = "";
     String destination = "";
+    String destinationId = "";
+
+    HashMap<String, String> waypointImages = new HashMap<>();
 
     Location loc = MainActivity.getLocation();
     @Override
@@ -44,11 +48,20 @@ public class NavigationActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             fromWhere = extras.getString("key0");
-            destination = extras.getString("key1");
+            if (extras.containsKey("key1")) {
+                destination = extras.getString("key1");
+            }
+            fromWhereId = loc.getPOIs().get(fromWhere);
+            destinationId = loc.getPOIs().get(destination);
         }
-
-
-
+        FireBaseManager.downloadImages("waypoint-images", (image) -> {
+            String[] imageNameParts = image.split("\\.jpg")[0].split("%2F");
+            String imageName = imageNameParts[imageNameParts.length - 1];
+            waypointImages.put(imageName, image);
+            Log.d("Tagu", "imageName: " + imageName + " fromWhere: " + fromWhere + " fromWhereId: " + fromWhereId);
+            if (imageName.equals(fromWhereId + "-up"))
+                Glide.with(this).load(waypointImages.get(imageName)).placeholder(R.drawable.compus_logo).into(IndoorView);
+        });
 
         FireBaseManager.downloadImages("floor-plans/", (image) -> {
             String name = image.split(loc.getLocationName() + "-floor-")[1].split("\\.")[0];
@@ -56,7 +69,8 @@ public class NavigationActivity extends AppCompatActivity {
             int size = Integer.parseInt(name);
             MaterialButton mb = new MaterialButton(this);
             mb.setText(name);
-            mb.setBackgroundColor(ContextCompat.getColor(this, R.color.dark));
+            mb.setTextColor(ContextCompat.getColorStateList(this, R.color.selectable_text));
+            mb.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.selectable_background));
 
             if(size > toggleGroup.getChildCount()) {
                 for (int i = toggleGroup.getChildCount(); i < size; i++) {
