@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/outlined_screen"
@@ -101,10 +102,21 @@
 <!--        android:visibility="invisible">-->
 <!--    </fragment>-->
 
+    <ImageView
+        android:id="@+id/WhereFrom_IMG_map"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10sp"
+        app:layout_constraintBottom_toTopOf="@+id/WhereFrom_BTN_next"
+        app:layout_constraintTop_toBottomOf="@+id/WhereFrom_TIL_current_location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="10sp"/>
+
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/WhereFrom_BTN_next"
         android:text="Start Navigation"
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:cornerRadius="10sp"

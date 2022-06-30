@@ -1,19 +1,15 @@
 package com.example.mobiledevproject;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import com.example.mobiledevproject.Objects.Location;
 import com.example.mobiledevproject.Objects.Waypoint;
-import com.example.mobiledevproject.Utility.AutoSuggestAdapter;
 import com.example.mobiledevproject.Utility.UtilityMethods;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,10 +17,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Consumer;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
     int currentMode = modes.NAVIGATION.ordinal(); // default mode is navigation
     String destination = "";
 
-    public static List<String> locations = new ArrayList<>();
-    public static List<Waypoint> waypoints = new ArrayList<>();
+
+    public static Location loc = new Location();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         findViews();
         setListeners();
         setPromptState(false);
-        FireBaseManager.getLocation("Afeka", autoCompleteTextView, locations, waypoints);
+        FireBaseManager.getLocation("Afeka", autoCompleteTextView, loc);
     }
 
     @Override
@@ -148,10 +142,19 @@ public class MainActivity extends AppCompatActivity {
         loginTXT = findViewById(R.id.Main_TXT_Login);
     }
 
-    public static List<String> getLocations() {
-        return locations;
+
+    public static List<String> getPoiNames() {
+
+        List<String> retList = new ArrayList<>();
+        for(String poi : loc.getPOIs().keySet()) {
+            retList.add(loc.getLocationName() + ", " + poi);
+        }
+
+        return retList;
     }
 
-    public static List<Waypoint> getWaypoints() { return waypoints; }
+    public static Location getLocation() {
+        return loc;
+    }
 
 }
