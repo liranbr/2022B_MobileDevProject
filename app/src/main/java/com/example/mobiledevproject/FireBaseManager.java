@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.util.Log;
 import android.widget.AutoCompleteTextView;
 
+import com.example.mobiledevproject.Objects.Graph;
 import com.example.mobiledevproject.Objects.Location;
 import com.example.mobiledevproject.Objects.Waypoint;
 import com.example.mobiledevproject.Utility.AutoSuggestAdapter;
@@ -26,12 +27,11 @@ public class FireBaseManager {
     private static final FirebaseStorage storage = FirebaseStorage.getInstance();
     private static final FirebaseAuth auth = FirebaseAuth.getInstance();
 
-    public static void getLocation(String locationName, AutoCompleteTextView acv, Location loc) {
+    public static void getLocation(String locationName, AutoCompleteTextView acv, Location loc, Graph<String> graph) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("locations").document(locationName).get().addOnCompleteListener(task -> {
             if(task.isSuccessful()) {
                 Location location = task.getResult().toObject(Location.class);
-
                 HashMap<String,String> poisMap = location.getPOIs();
                 List<String> pois = new ArrayList<>();
                 for(String poi : poisMap.keySet()) {
@@ -40,10 +40,19 @@ public class FireBaseManager {
                 acv.setAdapter(new AutoSuggestAdapter(acv.getContext(),android.R.layout.simple_list_item_1, pois));
                 acv.setThreshold(3);
 
-
+                HashMap<String, List<String>> strWaypointsMap = location.getWaypoints();
+                loc.setWaypoints(strWaypointsMap);
                 loc.setLocationName(location.getLocationName());
                 loc.setPOIs(poisMap);
-                loc.setWaypoints(location.getWaypoints());
+
+                for(String waypoint : strWaypointsMap.keySet()) {
+                    List<String> neighbors = strWaypointsMap.get(waypoint);
+                    graph.addVertex(waypoint);
+                    for(String neigh : neighbors) {
+                        graph.addEdge(waypoint, neigh, true);
+                    }
+                }
+                Log.d("ummmmm", graph.toString());
             }
         });
     }
@@ -63,6 +72,4 @@ public class FireBaseManager {
             }
         });
     }
-
-
 }

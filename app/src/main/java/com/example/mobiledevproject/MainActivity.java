@@ -2,6 +2,7 @@ package com.example.mobiledevproject;
 
 import android.os.Bundle;
 
+import com.example.mobiledevproject.Objects.Graph;
 import com.example.mobiledevproject.Objects.Location;
 import com.example.mobiledevproject.Objects.Waypoint;
 import com.example.mobiledevproject.Utility.UtilityMethods;
@@ -43,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     public static Location loc = new Location();
+    public static Graph<String> graph = new Graph<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         findViews();
         setListeners();
         setPromptState(false);
-        FireBaseManager.getLocation("Afeka", autoCompleteTextView, loc);
+        FireBaseManager.getLocation("Afeka", autoCompleteTextView, loc, graph);
     }
 
     @Override
