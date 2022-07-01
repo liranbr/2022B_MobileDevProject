@@ -46,6 +46,8 @@ public class FireBaseManager {
                 loc.setWaypoints(strWaypointsMap);
                 loc.setLocationName(location.getLocationName());
                 loc.setPOIs(poisMap);
+                loc.setWaypointToFloor(location.getWaypointToFloor());
+                loc.setFloors(location.getFloors());
 
                 for(String waypoint : strWaypointsMap.keySet()) {
                     List<String> neighbors = strWaypointsMap.get(waypoint);
@@ -54,7 +56,6 @@ public class FireBaseManager {
                         graph.addEdge(waypoint, neigh, true);
                     }
                 }
-                Log.d("ummmmm", graph.toString());
             }
         });
     }

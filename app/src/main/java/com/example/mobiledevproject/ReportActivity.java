@@ -129,11 +129,7 @@ public class ReportActivity extends AppCompatActivity {
 
                 FireBaseManager.addReport(rep);
 
-                //upload the new image to firebaseStorage using uploadedimageUri vairable
                 FireBaseManager.uploadImage(uploadedImgUri, uploadedImageName);
-
-                //upload the new image to firebaseStorage under report-images/<imageName>.jpg
-                //FireBaseManager.uploadImage("report-images/" + uploadedImageName + ".jpg", newPhoto.getDrawable());
 
                 finish();
             }
@@ -182,8 +178,6 @@ public class ReportActivity extends AppCompatActivity {
                                 }
                             });
 
-
-                    //img.setImageURI(uri);
                     uploadedImgUri = uri;
                 }
         );

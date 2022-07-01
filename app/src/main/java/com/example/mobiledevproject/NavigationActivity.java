@@ -5,15 +5,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Switch;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
@@ -25,10 +21,8 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 
 public class NavigationActivity extends AppCompatActivity {
 
@@ -44,11 +38,11 @@ public class NavigationActivity extends AppCompatActivity {
     MaterialButtonToggleGroup toggleGroup;
 
     int currentDirection = 0; // 0 = up, 1 = right, 2 = down, 3 = left
-    String fromWhere = "";
+    String fromWherePOI = "";
     String fromWhereId = "";
     String currentWaypoint = "";
     String previousWaypoint = "";
-    String destination = "";
+    String destinationPOI = "";
     String destinationId = "";
     String[] directions = {"up", "right", "down", "left"};
 
@@ -63,19 +57,18 @@ public class NavigationActivity extends AppCompatActivity {
         findViews();
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            fromWhere = extras.getString("key0");
+            fromWherePOI = extras.getString("key0");
             if (extras.containsKey("key1")) {
-                destination = extras.getString("key1");
+                destinationPOI = extras.getString("key1");
             }
-            fromWhereId = loc.getPOIs().get(fromWhere);
+            fromWhereId = loc.getPOIs().get(fromWherePOI);
             currentWaypoint = fromWhereId;
-            destinationId = loc.getPOIs().get(destination);
+            destinationId = loc.getPOIs().get(destinationPOI);
         }
 
         FireBaseManager.downloadImages("waypoint-images", (image) -> {
             String[] imageNameParts = image.split("\\.jpg")[0].split("%2F");
             String imageName = imageNameParts[imageNameParts.length - 1];
-            //Log.d("Tagu", "imageName: " + imageName + " fromWhere: " + fromWhere + " fromWhereId: " + fromWhereId);
             Glide.with(this)
                     .asBitmap()
                     .load(image)
@@ -92,31 +85,44 @@ public class NavigationActivity extends AppCompatActivity {
                     });
         });
 
-        FireBaseManager.downloadImages("floor-plans/", (image) -> {
-            String name = image.split(loc.getLocationName() + "-floor-")[1].split("\\.")[0];
+        String[] floors = loc.getFloors().split(",");
+        int floorCount = floors.length;
 
-            int size = Integer.parseInt(name);
+        for (int i = 0; i < floorCount; i++) {
+
             MaterialButton mb = new MaterialButton(this);
-            mb.setText(name);
+            mb.setText(floors[i]);
             mb.setTextColor(ContextCompat.getColorStateList(this, R.color.selectable_text));
             mb.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.selectable_background));
 
-            if(size > toggleGroup.getChildCount()) {
-                for (int i = toggleGroup.getChildCount(); i < size; i++) {
-                    toggleGroup.addView(new MaterialButton(this), i);
-                }
-            }
-            toggleGroup.removeViewAt(size - 1);
-            toggleGroup.addView(mb, size - 1);
+            toggleGroup.addView(mb, i);
+        }
 
-            toggleGroup.getChildAt(size - 1).setOnClickListener(v -> {
+        FireBaseManager.downloadImages("floor-plans/", (image) -> {
+            String floorName = image.split(loc.getLocationName() + "-floor-")[1].split("\\.")[0];
+
+            int index = Arrays.asList(floors).indexOf(floorName);
+            toggleGroup.getChildAt(index).setOnClickListener(v -> {
                 Glide.with(this).load(image).into(floorPlan);
             });
+
+            updateFloor();
         });
 
         setListeners();
     }
 
+    void updateFloor() {
+        String currentFloor = loc.getWaypointToFloor().get(currentWaypoint);
+        for (int i = 0; i < toggleGroup.getChildCount(); i++) {
+            MaterialButton child = (MaterialButton) toggleGroup.getChildAt(i);
+            if (child.getText().toString().equals(currentFloor)) {
+                toggleGroup.check(child.getId());
+                child.callOnClick();
+                break;
+            }
+        }
+    }
     void setListeners() {
 
         leftBtn.setOnClickListener(v -> {
@@ -140,6 +146,7 @@ public class NavigationActivity extends AppCompatActivity {
                     currentWaypoint = nextVertex;
                 }
             }
+            updateFloor();
         });
 
         backBtn.setOnClickListener(v -> {
@@ -151,6 +158,7 @@ public class NavigationActivity extends AppCompatActivity {
                     currentWaypoint = previousWaypoint;
                 }
             }
+            updateFloor();
         });
 
         reportBTN.setOnClickListener(v -> {
