@@ -51,9 +51,12 @@ public class GPSArrivalActivity extends AppCompatActivity {
 
     void setListeners()
     {
-        next_button.setOnClickListener((v) -> UtilityMethods.switchActivityWithData(
-                GPSArrivalActivity.this,
-                NavigationActivity.class, "Entrance", fullDestination.split(", ")[1]));
+        next_button.setOnClickListener((v) -> {
+            UtilityMethods.switchActivityWithData(
+                    GPSArrivalActivity.this,
+                    NavigationActivity.class, "Entrance", fullDestination.split(", ")[1]);
+            finish();
+        });
 
         Double lat = coordinates.get(destination + "_lat");
         Double lon = coordinates.get(destination + "_lon");
