@@ -92,6 +92,16 @@ public class Graph<T> {
 
         return (builder.toString());
     }
+
+    public String getNextVertex(String currentVertex, int direction) {
+        String nextVertex = null;
+        if (map.containsKey(currentVertex)) {
+            List<T> neighbors = map.get(currentVertex);
+            if(neighbors.size() >= direction)
+                nextVertex = neighbors.get(direction).toString();
+        }
+        return nextVertex;
+    }
 }
 
 // Driver Code

@@ -161,4 +161,6 @@ public class MainActivity extends AppCompatActivity {
         return loc;
     }
 
+    public static Graph<String> getGraph() { return graph; }
+
 }
