@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -51,7 +52,9 @@ public class GPSArrivalActivity extends AppCompatActivity {
 
     void setListeners()
     {
-        next_button.setOnClickListener((v) -> UtilityMethods.switchActivityWithData(GPSArrivalActivity.this, WhereFromActivity.class, fullDestination));
+        next_button.setOnClickListener((v) -> UtilityMethods.switchActivityWithData(
+                GPSArrivalActivity.this,
+                NavigationActivity.class, fullDestination.split(", ")[1]));
 
         Double lat = coordinates.get(destination + "_lat");
         Double lon = coordinates.get(destination + "_lon");
