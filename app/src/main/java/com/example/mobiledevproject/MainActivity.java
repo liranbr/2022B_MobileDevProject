@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     Button atPlaceBTN;
     MaterialButtonToggleGroup toggleGroup;
     AutoCompleteTextView autoCompleteTextView;
-    int currentMode = modes.NAVIGATION.ordinal(); // default mode is navigation
+    int currentMode = modes.LOOKAROUND.ordinal(); // default mode is navigation
     String destination = "";
 
 
@@ -120,8 +120,7 @@ public class MainActivity extends AppCompatActivity {
             }
             else if(currentMode == modes.LOOKAROUND.ordinal())
             {
-                //TODO: check if need to send data here
-                UtilityMethods.switchActivity(MainActivity.this, NavigationActivity.class);
+                UtilityMethods.switchActivityWithData(MainActivity.this, NavigationActivity.class, destination.split(", ")[1]);
             }
         });
 
