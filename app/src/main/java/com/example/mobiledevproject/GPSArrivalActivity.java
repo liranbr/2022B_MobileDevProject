@@ -47,14 +47,13 @@ public class GPSArrivalActivity extends AppCompatActivity {
     void setCoordinates() {
         coordinates.put("Afeka_lat", 32.113453);
         coordinates.put("Afeka_lon", 34.8175554);
-
     }
 
     void setListeners()
     {
         next_button.setOnClickListener((v) -> UtilityMethods.switchActivityWithData(
                 GPSArrivalActivity.this,
-                NavigationActivity.class, fullDestination.split(", ")[1]));
+                NavigationActivity.class, "Entrance", fullDestination.split(", ")[1]));
 
         Double lat = coordinates.get(destination + "_lat");
         Double lon = coordinates.get(destination + "_lon");
