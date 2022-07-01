@@ -53,7 +53,7 @@ public class FireBaseManager {
                     List<String> neighbors = strWaypointsMap.get(waypoint);
                     graph.addVertex(waypoint);
                     for(String neigh : neighbors) {
-                        graph.addEdge(waypoint, neigh, true);
+                        graph.addEdge(waypoint, neigh, false);
                     }
                 }
             }

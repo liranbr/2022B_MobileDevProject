@@ -3,6 +3,8 @@ package com.example.mobiledevproject.Objects;
 // Java program to implement Graph
 // with the help of Generics
 
+import android.util.Log;
+
 import java.util.*;
 
 public class Graph<T> {
@@ -102,6 +104,85 @@ public class Graph<T> {
         }
         return nextVertex;
     }
+
+    public T getNextVertexGen(T currentVertex, int direction) {
+        T nextVertex = null;
+        if (map.containsKey(currentVertex)) {
+            List<T> neighbors = map.get(currentVertex);
+            if(neighbors.size() >= direction)
+                nextVertex = neighbors.get(direction);
+        }
+        return nextVertex;
+    }
+
+    public List<String> getNeighbors(String currentVertex) {
+        List<String> neighbors = new ArrayList<>();
+        if (map.containsKey(currentVertex)) {
+            List<T> neighborsList = map.get(currentVertex);
+            for (T neighbor : neighborsList) {
+                neighbors.add(neighbor.toString());
+            }
+        }
+        return neighbors;
+    }
+    //get all neighbors of a vertex
+    public List<T> getNeighborsGen(String currentVertex) {
+        List<T> neighbors = new ArrayList<>();
+        if (map.containsKey(currentVertex)) {
+            neighbors = map.get(currentVertex);
+        }
+        return neighbors;
+    }
+
+    public String getNeighborDirection(String currentVertex, String neighbor) {
+        String[] directions = {"up", "right", "down", "left"};
+        String direction = "";
+        if (map.containsKey(currentVertex)) {
+            Log.d("Tagu", "In Graph: " + currentVertex);
+            List<T> neighborsList = map.get(currentVertex);
+            for (int i = 0; i < neighborsList.size(); i++) {
+                if (neighborsList.get(i).toString().equals(neighbor)) {
+                    direction = directions[i];
+                }
+            }
+        }
+        return direction;
+    }
+
+    //return shortest path from start to end
+    public List<String> getShortestPath(String start, String end) {
+        List<String> path = new ArrayList<>();
+        Map<String, Integer> distance = new HashMap<>();
+        Map<String, String> previous = new HashMap<>();
+        Set<String> visited = new HashSet<>();
+        List<String> queue = new ArrayList<>();
+        queue.add(start);
+        distance.put(start, 0);
+        while (!queue.isEmpty()) {
+            String current = queue.remove(0);
+            visited.add(current);
+            for (String neighbor : getNeighbors(current)) {
+                if (!visited.contains(neighbor) && !neighbor.isEmpty()) {
+                    queue.add(neighbor);
+                    int alt = distance.get(current) + 1;
+                    if (alt < distance.getOrDefault(neighbor, Integer.MAX_VALUE)) {
+                        distance.put(neighbor, alt);
+                        previous.put(neighbor, current);
+                    }
+                }
+            }
+        }
+        String vertex = end;
+        while (previous.containsKey(vertex)) {
+            //Log.d("Tagu", "in Graph: " + vertex);
+            path.add(vertex);
+            vertex = previous.get(vertex);
+        }
+        path.add(start);
+        Collections.reverse(path);
+        return path;
+    }
+
 }
 
 // Driver Code

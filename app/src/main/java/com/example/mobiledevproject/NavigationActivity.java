@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,8 +23,10 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class NavigationActivity extends AppCompatActivity {
 
@@ -38,6 +41,7 @@ public class NavigationActivity extends AppCompatActivity {
     FloatingActionButton reportBTN;
     MaterialButtonToggleGroup toggleGroup;
 
+    boolean isNavigation = false;
     int currentDirection = 0; // 0 = up, 1 = right, 2 = down, 3 = left
     String fromWherePOI = "";
     String fromWhereId = "";
@@ -46,6 +50,8 @@ public class NavigationActivity extends AppCompatActivity {
     String destinationPOI = "";
     String destinationId = "";
     String[] directions = {"up", "right", "down", "left"};
+    String[] shortestPathDirections = new String[0];
+    List<String> shortestPath = new ArrayList<>();
 
     HashMap<String, Bitmap> waypointImages = new HashMap<>();
 
@@ -61,6 +67,8 @@ public class NavigationActivity extends AppCompatActivity {
             fromWherePOI = extras.getString("key0");
             if (extras.containsKey("key1")) {
                 destinationPOI = extras.getString("key1");
+                if(!destinationPOI.isEmpty())
+                    isNavigation = true;
             }
             fromWhereId = loc.getPOIs().get(fromWherePOI);
             currentWaypoint = fromWhereId;
@@ -80,6 +88,7 @@ public class NavigationActivity extends AppCompatActivity {
                             if (imageName.equals(currentWaypoint + "-up"))
                                 IndoorView.setImageBitmap(resource);
                         }
+
                         @Override
                         public void onLoadCleared(@Nullable Drawable placeholder) {
                         }
@@ -110,7 +119,45 @@ public class NavigationActivity extends AppCompatActivity {
             updateFloor();
         });
 
+        if(isNavigation){
+            makeShortestPath();
+            getCurrentStep();
+        }
         setListeners();
+    }
+
+    //traverse the shortest path in the graph and create directions list
+    private void makeShortestPath() {
+        shortestPath = waypointsGraph.getShortestPath(fromWhereId, destinationId);
+        shortestPathDirections = new String[shortestPath.size()];
+        for (int i = 0; i < shortestPath.size() - 1; i++) {
+            shortestPathDirections[i] = waypointsGraph.getNeighborDirection(shortestPath.get(i), shortestPath.get(i + 1));
+        }
+    }
+
+    private void getCurrentStep() {
+        leftBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.dark));
+        upBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.dark));
+        rightBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.dark));
+        backBtn.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.dark));
+        int index = shortestPath.indexOf(currentWaypoint);
+        if(index == -1)
+            backBtn.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.green_500));
+        else if (index == shortestPath.size() - 1) {
+            leftBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.green_500));
+            upBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.green_500));
+            rightBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.green_500));
+            backBtn.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.green_500));
+        }
+        else {
+            String stepDirection = shortestPathDirections[index];
+            if(stepDirection.equals(directions[currentDirection]))
+                upBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.green_500));
+            else if(stepDirection.equals(directions[(currentDirection + 1) % 4]))
+                rightBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.green_500));
+            else
+                leftBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.green_500));
+        }
     }
 
     void updateFloor() {
@@ -129,11 +176,15 @@ public class NavigationActivity extends AppCompatActivity {
         leftBtn.setOnClickListener(v -> {
             //switch to image left of current image
             rotateImage(-1);
+            if(isNavigation)
+                getCurrentStep();
         });
 
         rightBtn.setOnClickListener(v -> {
             //switch to image right of current image
             rotateImage(1);
+            if(isNavigation)
+                getCurrentStep();
         });
 
         upBtn.setOnClickListener(v -> {
@@ -148,6 +199,8 @@ public class NavigationActivity extends AppCompatActivity {
                 }
             }
             updateFloor();
+            if(isNavigation)
+                getCurrentStep();
         });
 
         backBtn.setOnClickListener(v -> {
@@ -160,6 +213,8 @@ public class NavigationActivity extends AppCompatActivity {
                 }
             }
             updateFloor();
+            if(isNavigation)
+                getCurrentStep();
         });
 
         reportBTN.setOnClickListener(v -> {
