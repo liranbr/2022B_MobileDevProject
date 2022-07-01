@@ -56,9 +56,11 @@
             android:id="@+id/report_menu_ET_reason"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Enter Reason PlaceHolder"
+            android:hint="Enter description"
             android:imeOptions="actionDone"
+            android:inputType="textCapSentences|textMultiLine"
             android:background="@color/medium"
+            android:gravity="top"
             />
 
     </LinearLayout>

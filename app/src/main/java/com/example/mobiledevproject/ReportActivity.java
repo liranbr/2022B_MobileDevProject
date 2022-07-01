@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
@@ -127,8 +128,12 @@ public class ReportActivity extends AppCompatActivity {
                 rep.setWaypointId(wpId);
                 rep.setDirection(direction);
 
+                // Check that none of these are empty
+                if(rep.getReporterEmail().isEmpty() || rep.getText().isEmpty() || uploadedImgUri == null || rep.getWaypointId().isEmpty() || rep.getDirection().isEmpty()) {
+                    Toast.makeText(ReportActivity.this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 FireBaseManager.addReport(rep);
-
                 FireBaseManager.uploadImage(uploadedImgUri, uploadedImageName);
 
                 finish();
@@ -157,28 +162,29 @@ public class ReportActivity extends AppCompatActivity {
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() != Activity.RESULT_OK)
-                        throw new RuntimeException("Error choosing image!");
+                        Toast.makeText(this, "Error picking image", Toast.LENGTH_SHORT).show();
 
                     Intent data = result.getData();
+                    if (data != null) {
+                        Uri uri = data.getData();
 
-                    assert data != null;
-                    Uri uri = data.getData();
+                        Glide.with(this)
+                                .asBitmap()
+                                .load(uri)
+                                .into(new CustomTarget<Bitmap>() {
+                                    @Override
+                                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                                        Bitmap scaledBitMap = scaleToFitWidth(resource, Resources.getSystem().getDisplayMetrics().widthPixels);
+                                        img.setImageBitmap(scaledBitMap);
+                                    }
+                                    @Override
+                                    public void onLoadCleared(@Nullable Drawable placeholder) {
+                                    }
+                                });
 
-                    Glide.with(this)
-                            .asBitmap()
-                            .load(uri)
-                            .into(new CustomTarget<Bitmap>() {
-                                @Override
-                                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                                    Bitmap scaledBitMap = scaleToFitWidth(resource, Resources.getSystem().getDisplayMetrics().widthPixels);
-                                    img.setImageBitmap(scaledBitMap);
-                                }
-                                @Override
-                                public void onLoadCleared(@Nullable Drawable placeholder) {
-                                }
-                            });
+                        uploadedImgUri = uri;
+                    }
 
-                    uploadedImgUri = uri;
                 }
         );
         img.setOnClickListener(event -> this.chooserLauncher.launch(chooser));

@@ -44,8 +44,8 @@ public class GPSArrivalActivity extends AppCompatActivity {
     }
 
     void setCoordinates() {
-        coordinates.put("Afeka College_lat", 32.113453);
-        coordinates.put("Afeka College_lon", 34.8175554);
+        coordinates.put("Afeka_lat", 32.113453);
+        coordinates.put("Afeka_lon", 34.8175554);
 
     }
 
