@@ -1,11 +1,13 @@
 package com.example.mobiledevproject;
 
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.AutoCompleteTextView;
 
 import com.example.mobiledevproject.Objects.Graph;
 import com.example.mobiledevproject.Objects.Location;
+import com.example.mobiledevproject.Objects.Report;
 import com.example.mobiledevproject.Objects.Waypoint;
 import com.example.mobiledevproject.Utility.AutoSuggestAdapter;
 import com.google.android.gms.tasks.Task;
@@ -81,4 +83,17 @@ public class FireBaseManager {
             }
         });
     }
+
+    public static void addReport(Report rep) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("reports").add(rep);
+    }
+
+    public static void uploadImage(Uri uploadedImgUri, String uploadedImageName) {
+        StorageReference imageRef = storage.getReference().child("report-images/" + uploadedImageName);
+            imageRef.putFile(uploadedImgUri).addOnCompleteListener(task -> {
+            });
+    }
+
 }
+
