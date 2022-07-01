@@ -75,7 +75,7 @@ public class NavigationActivity extends AppCompatActivity {
         FireBaseManager.downloadImages("waypoint-images", (image) -> {
             String[] imageNameParts = image.split("\\.jpg")[0].split("%2F");
             String imageName = imageNameParts[imageNameParts.length - 1];
-            Log.d("Tagu", "imageName: " + imageName + " fromWhere: " + fromWhere + " fromWhereId: " + fromWhereId);
+            //Log.d("Tagu", "imageName: " + imageName + " fromWhere: " + fromWhere + " fromWhereId: " + fromWhereId);
             Glide.with(this)
                     .asBitmap()
                     .load(image)
@@ -154,7 +154,8 @@ public class NavigationActivity extends AppCompatActivity {
         });
 
         reportBTN.setOnClickListener(v -> {
-            UtilityMethods.switchActivity(this, ReportActivity.class);
+            String imageName = currentWaypoint + "-" + directions[currentDirection];
+            UtilityMethods.switchActivityWithData(this, ReportActivity.class, imageName);
         });
 
     }

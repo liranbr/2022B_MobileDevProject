@@ -72,4 +72,13 @@ public class FireBaseManager {
             }
         });
     }
+
+    public static void downloadImage(String path, Consumer<String> callback) {
+        StorageReference imageRef = storage.getReference().child(path);
+        imageRef.getDownloadUrl().addOnCompleteListener(task -> {
+            if(task.isSuccessful()) {
+                callback.accept(task.getResult().toString());
+            }
+        });
+    }
 }
