@@ -93,8 +93,8 @@ public class NavigationActivity extends AppCompatActivity {
 
             MaterialButton mb = new MaterialButton(this);
             mb.setText(floors[i]);
-            mb.setTextColor(ContextCompat.getColorStateList(this, R.color.selectable_text));
-            mb.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.selectable_background));
+            mb.setTextColor(ContextCompat.getColorStateList(this, R.color.selectable_floor_button_text));
+            mb.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.selectable_floor_button_background));
 
             toggleGroup.addView(mb, i);
         }

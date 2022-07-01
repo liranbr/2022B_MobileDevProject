@@ -6,10 +6,15 @@
         <entry key="..\:/Users/Liran/AndroidStudioProjects/MobileDevProject/app/src/main/res/drawable-v24/filled_text_box.xml" value="0.4285" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/MobileDevProject/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2355" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/MobileDevProject/app/src/main/res/drawable-v24/outlined_text_box.xml" value="0.332" />
+        <entry key="..\:/Users/Liran/AndroidStudioProjects/MobileDevProject/app/src/main/res/drawable/arrow_forward_icon.xml" value="0.2455" />
+        <entry key="..\:/Users/Liran/AndroidStudioProjects/MobileDevProject/app/src/main/res/drawable/arrow_left_icon.xml" value="0.2455" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/MobileDevProject/app/src/main/res/drawable/outlined_box.xml" value="0.2975" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/MobileDevProject/app/src/main/res/drawable/outlined_button.xml" value="0.2725" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/MobileDevProject/app/src/main/res/drawable/outlined_input_box.xml" value="0.5425" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/MobileDevProject/app/src/main/res/drawable/outlined_screen.xml" value="0.297" />
+        <entry key="..\:/Users/Liran/AndroidStudioProjects/MobileDevProject/app/src/main/res/drawable/report_icon.xml" value="0.2455" />
+        <entry key="..\:/Users/Liran/AndroidStudioProjects/MobileDevProject/app/src/main/res/drawable/rotate_left_icon.xml" value="0.2455" />
+        <entry key="..\:/Users/Liran/AndroidStudioProjects/MobileDevProject/app/src/main/res/drawable/undo_arrow_icon.xml" value="0.2455" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/MobileDevProject/app/src/main/res/drawable/waze_logo.xml" value="0.375" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/MobileDevProject/app/src/main/res/layout/activity_homepage.xml" value="0.5" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/MobileDevProject/app/src/main/res/layout/activity_login.xml" value="0.559375" />
@@ -18,7 +23,7 @@
         <entry key="..\:/Users/Liran/AndroidStudioProjects/MobileDevProject/app/src/main/res/layout/fragment_main.xml" value="0.5543478260869565" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/MobileDevProject/app/src/main/res/layout/gps_arrival_menu.xml" value="0.5" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/MobileDevProject/app/src/main/res/layout/navigation_screen.xml" value="0.33" />
-        <entry key="..\:/Users/Liran/AndroidStudioProjects/MobileDevProject/app/src/main/res/layout/report_menu.xml" value="0.559375" />
+        <entry key="..\:/Users/Liran/AndroidStudioProjects/MobileDevProject/app/src/main/res/layout/report_menu.xml" value="0.5" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/MobileDevProject/app/src/main/res/layout/sample_floor_view.xml" value="0.559375" />
         <entry key="..\:/Users/Liran/AndroidStudioProjects/MobileDevProject/app/src/main/res/layout/where_from_menu.xml" value="0.5" />
         <entry key="..\:/Users/ronen/Desktop/Afeka/Y4 S2/Mobile/project/project/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.47891156462585033" />

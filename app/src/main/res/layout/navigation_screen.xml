@@ -36,6 +36,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/dark"
+            android:src="@drawable/report_icon"
+            android:foreground="@drawable/report_icon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
         <ImageButton
@@ -43,6 +45,10 @@
             android:layout_width="50sp"
             android:layout_height="50sp"
             android:backgroundTint="@color/dark"
+            android:src="@drawable/undo_arrow_icon"
+            android:padding="5sp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
         <com.google.android.material.button.MaterialButtonToggleGroup
@@ -62,20 +68,31 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/med_dark"
         android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/Navigation_IMGBTN_left"
+            android:layout_margin="3sp"
+            android:src="@drawable/rotate_left_icon"
+            android:background="@color/dark"
             android:layout_width="0sp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
         <ImageButton
             android:id="@+id/Navigation_IMGBTN_up"
+            android:layout_margin="3sp"
+            android:src="@drawable/arrow_forward_icon"
+            android:background="@color/dark"
+            android:scaleType="fitCenter"
             android:layout_width="0sp"
             android:layout_height="match_parent"
             android:layout_weight="3" />
         <ImageButton
             android:id="@+id/Navigation_IMGBTN_right"
+            android:layout_margin="3sp"
+            android:src="@drawable/rotate_right_icon"
+            android:background="@color/dark"
             android:layout_width="0sp"
             android:layout_height="match_parent"
             android:layout_weight="1" />

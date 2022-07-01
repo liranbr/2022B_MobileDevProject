@@ -107,7 +107,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10sp"
-        app:layout_constraintBottom_toTopOf="@+id/WhereFrom_BTN_next"
+        app:layout_constraintBottom_toTopOf="@+id/WhereFrom_BTN_startNav"
         app:layout_constraintTop_toBottomOf="@+id/WhereFrom_TIL_current_location"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -115,7 +115,7 @@
 
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/WhereFrom_BTN_next"
+        android:id="@+id/WhereFrom_BTN_startNav"
         android:text="Start Navigation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
