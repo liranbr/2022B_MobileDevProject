@@ -13,12 +13,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.mobiledevproject.Objects.Graph;
 import com.example.mobiledevproject.Objects.Location;
+import com.example.mobiledevproject.Utility.UtilityMethods;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -45,11 +47,11 @@ public class NavigationActivity extends AppCompatActivity {
     String fromWhere = "";
     String fromWhereId = "";
     String currentWaypoint = "";
+    String previousWaypoint = "";
     String destination = "";
     String destinationId = "";
     String[] directions = {"up", "right", "down", "left"};
 
-    //HashMap<String, String> waypointImages = new HashMap<>();
     HashMap<String, Bitmap> waypointImages = new HashMap<>();
 
     Location loc = MainActivity.getLocation();
@@ -134,9 +136,25 @@ public class NavigationActivity extends AppCompatActivity {
                 String nextImageName = nextVertex + "-" + directions[currentDirection];
                 if (waypointImages.containsKey(nextImageName)) {
                     IndoorView.setImageBitmap(waypointImages.get(nextImageName));
+                    previousWaypoint = currentWaypoint;
                     currentWaypoint = nextVertex;
                 }
             }
+        });
+
+        backBtn.setOnClickListener(v -> {
+            //move the the previous vertex in the graph according to the location looking at
+            if (previousWaypoint != null) {
+                String previousImageName = previousWaypoint + "-" + directions[currentDirection];
+                if (waypointImages.containsKey(previousImageName)) {
+                    IndoorView.setImageBitmap(waypointImages.get(previousImageName));
+                    currentWaypoint = previousWaypoint;
+                }
+            }
+        });
+
+        reportBTN.setOnClickListener(v -> {
+            UtilityMethods.switchActivity(this, ReportActivity.class);
         });
 
     }
