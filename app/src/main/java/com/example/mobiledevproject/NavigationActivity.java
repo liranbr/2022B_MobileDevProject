@@ -243,12 +243,14 @@ public class NavigationActivity extends AppCompatActivity {
             //move the the next vertex in the graph according to the location looking at
             String nextVertex = waypointsGraph.getNextVertex(currentWaypoint, currentDirection);
             if (nextVertex != null) {
-                String nextImageName = nextVertex + "-" + directions[currentDirection];
-                if (waypointImages.containsKey(nextImageName)) {
-//                    IndoorView.setImageBitmap(waypointImages.get(nextImageName)); TODO
-                    previousWaypoints.add(currentWaypoint); //add current waypoint to the stack of previous waypoints
-                    currentWaypoint = nextVertex;
+                for (int i = 0; i < directions.length; i++) {
+                    String nextImageName = nextVertex + "-" + directions[i];
+                    if (waypointImages.containsKey(nextImageName)) {
+                        IndoorViews[i].setImageBitmap(waypointImages.get(nextImageName));
+                    }
                 }
+                previousWaypoints.add(currentWaypoint);
+                currentWaypoint = nextVertex;
             }
             updateFloor();
             checkCanMoveForward();
@@ -259,11 +261,14 @@ public class NavigationActivity extends AppCompatActivity {
         backBtn.setOnClickListener(v -> {
             // Move to the previous waypoint according to the stack
             if(previousWaypoints.size() > 0) {
-                String previousImageName = previousWaypoints.peek() + "-" + directions[currentDirection];
-                if (waypointImages.containsKey(previousImageName)) {
-//                    IndoorView.setImageBitmap(waypointImages.get(previousImageName)); TODO
-                    currentWaypoint = previousWaypoints.pop();
+                String previousVertex = previousWaypoints.peek();
+                for (int i = 0; i < directions.length; i++) {
+                    String previousImageName = previousVertex + "-" + directions[i];
+                    if (waypointImages.containsKey(previousImageName)) {
+                        IndoorViews[i].setImageBitmap(waypointImages.get(previousImageName));
+                    }
                 }
+                currentWaypoint = previousWaypoints.pop();
             }
 
             updateFloor();
