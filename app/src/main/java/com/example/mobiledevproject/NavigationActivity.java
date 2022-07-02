@@ -12,6 +12,7 @@ import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
@@ -59,11 +60,12 @@ public class NavigationActivity extends AppCompatActivity {
     Stack<String> previousWaypoints = new Stack<>();
 
     HashMap<String, Bitmap> waypointImages = new HashMap<>();
-    Location loc = MainActivity.getLocation();
+    Location loc = new Location();
     Graph<String> waypointsGraph = MainActivity.getGraph();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        loc = MainActivity.getLocation();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_screen);
         findViews();
@@ -118,6 +120,7 @@ public class NavigationActivity extends AppCompatActivity {
         for (int i = 0; i < floorCount; i++) {
             MaterialButton mb = new MaterialButton(this);
             mb.setText(floors[i]);
+            mb.setPadding(0, 0, 0, 0);
             mb.setTextColor(ContextCompat.getColorStateList(this, R.color.selectable_floor_button_text));
             mb.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.selectable_floor_button_background));
 
