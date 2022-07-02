@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Stack;
 
 public class NavigationActivity extends AppCompatActivity {
 
@@ -34,7 +35,7 @@ public class NavigationActivity extends AppCompatActivity {
 
     ImageButton backBtn;
     ImageButton leftBtn;
-    ImageButton upBtn;
+    ImageButton forwardBtn;
     ImageButton rightBtn;
 
     FloatingActionButton reportBTN;
@@ -45,12 +46,13 @@ public class NavigationActivity extends AppCompatActivity {
     String fromWherePOI = "";
     String fromWhereId = "";
     String currentWaypoint = "";
-    String previousWaypoint = "";
     String destinationPOI = "";
     String destinationId = "";
     String[] directions = {"up", "right", "down", "left"};
     String[] shortestPathDirections = new String[0];
     List<String> shortestPath = new ArrayList<>();
+
+    Stack<String> previousWaypoints = new Stack<>();
 
     HashMap<String, Bitmap> waypointImages = new HashMap<>();
     Location loc = MainActivity.getLocation();
@@ -139,7 +141,7 @@ public class NavigationActivity extends AppCompatActivity {
     // Get the current needed step in the found path and highlight the correct arrow
     private void getCurrentStep() {
         leftBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.dark));
-        upBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.dark));
+        forwardBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.dark));
         rightBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.dark));
         backBtn.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.dark));
         int index = shortestPath.indexOf(currentWaypoint);
@@ -148,14 +150,14 @@ public class NavigationActivity extends AppCompatActivity {
         else if (index == shortestPath.size() - 1) {
             // If Reached Destination - Color all the arrows green
             leftBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.green_500));
-            upBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.green_500));
+            forwardBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.green_500));
             rightBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.green_500));
             backBtn.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.green_500));
         }
         else {
             String stepDirection = shortestPathDirections[index];
             if(stepDirection.equals(directions[currentDirection]))
-                upBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.green_500));
+                forwardBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.green_500));
             else if(stepDirection.equals(directions[(currentDirection + 1) % 4]))
                 rightBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.green_500));
             else
@@ -179,12 +181,12 @@ public class NavigationActivity extends AppCompatActivity {
     // If there is no vertex in front of the current vertex, disable the Forward button
     void checkCanMoveForward() {
         if (waypointsGraph.getNeighbors(currentWaypoint).get(currentDirection).equals("")) {
-            upBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.med_dark));
-            upBtn.setEnabled(false);
+            forwardBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.med_dark));
+            forwardBtn.setEnabled(false);
         }
         else {
-            upBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.dark));
-            upBtn.setEnabled(true);
+            forwardBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.dark));
+            forwardBtn.setEnabled(true);
         }
     }
 
@@ -205,14 +207,14 @@ public class NavigationActivity extends AppCompatActivity {
                 getCurrentStep();
         });
 
-        upBtn.setOnClickListener(v -> {
+        forwardBtn.setOnClickListener(v -> {
             //move the the next vertex in the graph according to the location looking at
             String nextVertex = waypointsGraph.getNextVertex(currentWaypoint, currentDirection);
             if (nextVertex != null) {
                 String nextImageName = nextVertex + "-" + directions[currentDirection];
                 if (waypointImages.containsKey(nextImageName)) {
                     IndoorView.setImageBitmap(waypointImages.get(nextImageName));
-                    previousWaypoint = currentWaypoint;
+                    previousWaypoints.add(currentWaypoint); //add current waypoint to the stack of previous waypoints
                     currentWaypoint = nextVertex;
                 }
             }
@@ -223,14 +225,15 @@ public class NavigationActivity extends AppCompatActivity {
         });
 
         backBtn.setOnClickListener(v -> {
-            //move the the previous vertex in the graph according to the location looking at
-            if (previousWaypoint != null) {
-                String previousImageName = previousWaypoint + "-" + directions[currentDirection];
+            // Move to the previous waypoint according to the stack
+            if(previousWaypoints.size() > 0) {
+                String previousImageName = previousWaypoints.peek() + "-" + directions[currentDirection];
                 if (waypointImages.containsKey(previousImageName)) {
                     IndoorView.setImageBitmap(waypointImages.get(previousImageName));
-                    currentWaypoint = previousWaypoint;
+                    currentWaypoint = previousWaypoints.pop();
                 }
             }
+
             updateFloor();
             checkCanMoveForward();
             if(isNavigation)
@@ -259,7 +262,7 @@ public class NavigationActivity extends AppCompatActivity {
         floorPlan = findViewById(R.id.Navigation_IMG_Floor);
         backBtn = findViewById(R.id.Navigation_IMGBTN_back);
         leftBtn = findViewById(R.id.Navigation_IMGBTN_left);
-        upBtn = findViewById(R.id.Navigation_IMGBTN_up);
+        forwardBtn = findViewById(R.id.Navigation_IMGBTN_up);
         rightBtn = findViewById(R.id.Navigation_IMGBTN_right);
         reportBTN = findViewById(R.id.Navigation_FAB_report);
         toggleGroup = findViewById(R.id.Navigation_MBTG_navigation);
