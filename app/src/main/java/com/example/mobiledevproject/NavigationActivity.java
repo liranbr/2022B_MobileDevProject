@@ -171,18 +171,34 @@ public class NavigationActivity extends AppCompatActivity {
             }
         }
     }
+
+    // If there is no vertex in front of the current vertex, disable the Forward button
+    void checkCanMoveForward() {
+        if (waypointsGraph.getNeighbors(currentWaypoint).get(currentDirection).equals("")) {
+            upBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.med_dark));
+            upBtn.setEnabled(false);
+        }
+        else {
+            upBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.dark));
+            upBtn.setEnabled(true);
+        }
+    }
+
     void setListeners() {
 
         leftBtn.setOnClickListener(v -> {
             //switch to image left of current image
             rotateImage(-1);
+            checkCanMoveForward();
             if(isNavigation)
                 getCurrentStep();
+
         });
 
         rightBtn.setOnClickListener(v -> {
             //switch to image right of current image
             rotateImage(1);
+            checkCanMoveForward();
             if(isNavigation)
                 getCurrentStep();
         });
@@ -199,6 +215,7 @@ public class NavigationActivity extends AppCompatActivity {
                 }
             }
             updateFloor();
+            checkCanMoveForward();
             if(isNavigation)
                 getCurrentStep();
         });
@@ -213,6 +230,7 @@ public class NavigationActivity extends AppCompatActivity {
                 }
             }
             updateFloor();
+            checkCanMoveForward();
             if(isNavigation)
                 getCurrentStep();
         });
