@@ -53,7 +53,6 @@ public class WhereFromActivity extends AppCompatActivity {
         FireBaseManager.downloadImages("floor-plans/", (image) -> {
             String floorName = image.split(locationName + "-floor-")[1].split("\\.")[0];
             imageURLs.put(floorName, image);
-            Log.d("Tagu", "Downloaded image: " + image + " for floor " + floorName);
         });
 
         AutoSuggestAdapter adapter = new AutoSuggestAdapter(this, android.R.layout.simple_list_item_1, destinations);
@@ -70,8 +69,7 @@ public class WhereFromActivity extends AppCompatActivity {
             whereFromACTV.setText(selectedPOI);
 
             String currentFloor = location.getWaypointToFloor().get(location.getPOIs().get(selectedPOI));
-            Log.d("Tagu", "requesting image for floor " + currentFloor);
-            Glide.with(this).load(imageURLs.get(currentFloor)).placeholder(R.drawable.compus_logo).into(floorPlan); // TODO: CHANGE
+            Glide.with(this).load(imageURLs.get(currentFloor)).placeholder(R.drawable.compus_logo).into(floorPlan);
 
         });
 

@@ -138,7 +138,6 @@ public class Graph<T> {
         String[] directions = {"up", "right", "down", "left"};
         String direction = "";
         if (map.containsKey(currentVertex)) {
-            Log.d("Tagu", "In Graph: " + currentVertex);
             List<T> neighborsList = map.get(currentVertex);
             for (int i = 0; i < neighborsList.size(); i++) {
                 if (neighborsList.get(i).toString().equals(neighbor)) {
@@ -174,7 +173,6 @@ public class Graph<T> {
         }
         String vertex = end;
         while (previous.containsKey(vertex)) {
-            //Log.d("Tagu", "in Graph: " + vertex);
             path.add(vertex);
             vertex = previous.get(vertex);
         }

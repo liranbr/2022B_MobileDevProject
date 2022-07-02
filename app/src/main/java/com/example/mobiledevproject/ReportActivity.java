@@ -56,7 +56,6 @@ public class ReportActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             imageName = extras.getString("key0");
-            Log.d("Tagu", "imageName: " + imageName);
         }
 
 
