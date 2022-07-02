@@ -8,9 +8,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/compus_logo"
+        android:icon="@mipmap/compus_logo"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/compus_logo"
+        android:roundIcon="@mipmap/compus_logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MobileDevProject.NoActionBar">
         <activity

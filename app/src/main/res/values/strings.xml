@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Mobile Dev Project</string>
+    <string name="app_name">Compus</string>
     <string name="tab_text_1">Directions</string>
     <string name="tab_text_2">Look Around</string>
     <string name="title_activity_login">LoginActivity</string>
