@@ -13,6 +13,7 @@ public class Location implements Serializable {
     HashMap<String,String> POIs = new HashMap<>(); //POI name -> waypoint ID
     HashMap<String, String> WaypointToFloor = new HashMap<>(); //waypoint ID -> floor ID
     String Floors;
+    String Entrance_LatLng;
 //    LatLng entrance;
 
     public Location() {}
@@ -45,6 +46,8 @@ public class Location implements Serializable {
 
     public String getFloors() { return Floors; }
 
+    public String getEntrance_LatLng() { return Entrance_LatLng; }
+
     public void setLocationName(String locationName) {
         LocationName = locationName;
     }
@@ -60,5 +63,7 @@ public class Location implements Serializable {
     public void setWaypointToFloor(HashMap<String, String> waypointToFloor) { this.WaypointToFloor = waypointToFloor; }
 
     public void setFloors(String floors) { this.Floors = floors; }
+
+    public void setEntrance_LatLng(String entrance_LatLng) { this.Entrance_LatLng = entrance_LatLng; }
 
 }

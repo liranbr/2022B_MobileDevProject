@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.mobiledevproject.Objects.Location;
 import com.example.mobiledevproject.Utility.UtilityMethods;
 
 import java.util.HashMap;
@@ -26,8 +27,7 @@ public class GPSArrivalActivity extends AppCompatActivity {
     String fullDestination = "";
     String destination = "";
 
-    HashMap<String,Double> coordinates = new HashMap<>();
-
+    Location loc = MainActivity.getLocation();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,28 +40,24 @@ public class GPSArrivalActivity extends AppCompatActivity {
             destination = fullDestination.split(",")[0];
             place_text.setText(destination);
         }
-        setCoordinates();
         setListeners();
     }
 
-    void setCoordinates() {
-        coordinates.put("Afeka_lat", 32.113453);
-        coordinates.put("Afeka_lon", 34.8175554);
-    }
 
     void setListeners()
     {
         next_button.setOnClickListener((v) -> {
             UtilityMethods.switchActivityWithData(
                     GPSArrivalActivity.this,
-                    NavigationActivity.class, "Entrance", fullDestination.split(", ")[1]);
+                    NavigationActivity.class, "Entrance",
+                    fullDestination.split(", ")[1]);
             finish();
         });
 
-        Double lat = coordinates.get(destination + "_lat");
-        Double lon = coordinates.get(destination + "_lon");
+        String latLng = loc.getEntrance_LatLng();
 
-        assert lat != null && lon != null;
+        double lat = Double.parseDouble(latLng.split(",")[0]);
+        double lon = Double.parseDouble(latLng.split(",")[1]);
 
         Waze_IMG.setOnClickListener((v) -> searchWaze(destination, lat, lon));
 
@@ -70,6 +66,7 @@ public class GPSArrivalActivity extends AppCompatActivity {
         Moovit_IMG.setOnClickListener((v) -> searchMoovit(destination, lat, lon));
     }
 
+    // Deep link to Waze
     void searchWaze(String dst, double lat, double lon) {
         try {
             String url = "https://waze.com/ul?ll=" + lat + "," + lon +"&navigate=yes";
@@ -82,6 +79,7 @@ public class GPSArrivalActivity extends AppCompatActivity {
         }
     }
 
+    // Deep link to Moovit
     private void searchMoovit(String dst, double lat, double lon) {
         String url = "moovit://directions?dest_lat=" + lat + "&dest_lon=" + lon + "&dest_name=" + dst;
         try {
@@ -95,6 +93,7 @@ public class GPSArrivalActivity extends AppCompatActivity {
         }
     }
 
+    // Deep link to Google Maps
     private void searchGoogleMaps(String dst, double lat, double lon) {
         String url = "https://www.google.com/maps/dir/?api=1&destination=" + lat + "," + lon;
         Intent i = new Intent(Intent.ACTION_VIEW);

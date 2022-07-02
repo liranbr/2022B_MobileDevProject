@@ -13,7 +13,6 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +24,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.mobiledevproject.Objects.Report;
+import com.example.mobiledevproject.Utility.FireBaseManager;
 import com.example.mobiledevproject.Utility.UtilityMethods;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -38,10 +38,8 @@ public class ReportActivity extends AppCompatActivity {
 
     ImageView currentPhoto;
     ImageView newPhoto;
-
     TextView email;
     EditText description;
-
     Button submit;
 
     String imageName = "";
@@ -58,7 +56,7 @@ public class ReportActivity extends AppCompatActivity {
             imageName = extras.getString("key0");
         }
 
-
+        // Find the relevant indoor view and show it
         FireBaseManager.downloadImage("waypoint-images/" + imageName + ".jpg", (image) -> {
 
             Glide.with(this)
@@ -104,6 +102,8 @@ public class ReportActivity extends AppCompatActivity {
 
     }
 
+    // Set the onclick listener for the submit Button according to the relevant action.
+    // If the user is logged in, they can submit the report. If not, they need to login to submit the report.
     public void setSubmitListener(String action) {
 
         View.OnClickListener loginListener = new View.OnClickListener() {
@@ -146,12 +146,14 @@ public class ReportActivity extends AppCompatActivity {
         }
     }
 
+    // Scale the image's height to fit with the width.
     Bitmap scaleToFitWidth(Bitmap b, int width) {
 
         float factor = width / (float)b.getWidth();
         return Bitmap.createScaledBitmap(b, width, (int)(b.getHeight() * factor), true);
     }
 
+    // Set up the option to pick an image from gallery.
     public void setupImagePicker(ImageView img) {
         Intent chooser = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         chooser.addCategory(Intent.CATEGORY_OPENABLE);

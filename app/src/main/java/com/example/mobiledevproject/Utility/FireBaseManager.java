@@ -1,4 +1,4 @@
-package com.example.mobiledevproject;
+package com.example.mobiledevproject.Utility;
 
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -27,8 +27,8 @@ import java.util.function.Consumer;
 public class FireBaseManager {
 
     private static final FirebaseStorage storage = FirebaseStorage.getInstance();
-    private static final FirebaseAuth auth = FirebaseAuth.getInstance();
 
+    // Download location data from FireBase Firestore and fill the Graph with waypoints data
     public static void getLocation(String locationName, AutoCompleteTextView acv, Location loc, Graph<String> graph) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("locations").document(locationName).get().addOnCompleteListener(task -> {
@@ -48,6 +48,7 @@ public class FireBaseManager {
                 loc.setPOIs(poisMap);
                 loc.setWaypointToFloor(location.getWaypointToFloor());
                 loc.setFloors(location.getFloors());
+                loc.setEntrance_LatLng(location.getEntrance_LatLng());
 
                 for(String waypoint : strWaypointsMap.keySet()) {
                     List<String> neighbors = strWaypointsMap.get(waypoint);
@@ -61,6 +62,7 @@ public class FireBaseManager {
     }
 
 
+    // Download a set of images from a given folder in FireBase Storage
     public static void downloadImages(String path, Consumer<String> callback) {
         StorageReference imageRef = storage.getReference().child(path);
         imageRef.listAll().addOnCompleteListener(task -> {
@@ -76,6 +78,7 @@ public class FireBaseManager {
         });
     }
 
+    // Download a single image from FireBase Storage
     public static void downloadImage(String path, Consumer<String> callback) {
         StorageReference imageRef = storage.getReference().child(path);
         imageRef.getDownloadUrl().addOnCompleteListener(task -> {
@@ -85,11 +88,13 @@ public class FireBaseManager {
         });
     }
 
+    // Upload a report to FireBase Firestore
     public static void addReport(Report rep) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("reports").add(rep);
     }
 
+    // Upload an image to FireBase Storage
     public static void uploadImage(Uri uploadedImgUri, String uploadedImageName) {
         StorageReference imageRef = storage.getReference().child("report-images/" + uploadedImageName);
             imageRef.putFile(uploadedImgUri).addOnCompleteListener(task -> {

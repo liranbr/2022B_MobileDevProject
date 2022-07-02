@@ -3,7 +3,6 @@ package com.example.mobiledevproject;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.mobiledevproject.Objects.Location;
 import com.example.mobiledevproject.Utility.AutoSuggestAdapter;
+import com.example.mobiledevproject.Utility.FireBaseManager;
 import com.example.mobiledevproject.Utility.UtilityMethods;
 
 import java.util.ArrayList;
@@ -50,6 +50,7 @@ public class WhereFromActivity extends AppCompatActivity {
 
         destinations = getRelevantPOIs(locationName);
 
+        // Download floor plans to show the user the floor plan of the location they are in.
         FireBaseManager.downloadImages("floor-plans/", (image) -> {
             String floorName = image.split(locationName + "-floor-")[1].split("\\.")[0];
             imageURLs.put(floorName, image);

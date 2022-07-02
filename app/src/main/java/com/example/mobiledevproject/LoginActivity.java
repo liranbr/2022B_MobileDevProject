@@ -52,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
             return false;
         });
 
+        //A listener that will be set if the user needs to Register
         View.OnClickListener registerListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
+        //A listener that will be set if the user needs to Login
         View.OnClickListener loginListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,6 +101,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (email.getText() != null && !email.getText().toString().equals("")) {
+                    //check if user exists (if it has any method of signing in)
                     auth.fetchSignInMethodsForEmail(email.getText().toString()).addOnCompleteListener(task -> {
                         if(task.isSuccessful()) {
                             email.setEnabled(false);
@@ -106,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
                             boolean isNewUser = Objects.requireNonNull(task.getResult().getSignInMethods()).isEmpty();
                             password.setEnabled(true);
                             password.setVisibility(android.view.View.VISIBLE);
-                            if (isNewUser) {
+                            if (isNewUser) { //if its a new user
                                 btn.setText("Register");
                                 btn.setOnClickListener(registerListener);
                                 password.setOnEditorActionListener((v1, actionId, event) -> {
@@ -117,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
                                     registerListener.onClick(v1);
                                     return false;
                                 });
-                            } else {
+                            } else { //if its an existing user
                                 btn.setText("Login");
                                 btn.setOnClickListener(loginListener);
                                 password.setOnEditorActionListener((v1, actionId, event) -> {

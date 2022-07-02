@@ -4,13 +4,12 @@ import android.os.Bundle;
 
 import com.example.mobiledevproject.Objects.Graph;
 import com.example.mobiledevproject.Objects.Location;
-import com.example.mobiledevproject.Objects.Waypoint;
+import com.example.mobiledevproject.Utility.FireBaseManager;
 import com.example.mobiledevproject.Utility.UtilityMethods;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -64,14 +63,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-
-        if(auth.getCurrentUser() != null) {
+        if(auth.getCurrentUser() != null) { //if the user is logged in
             loginTXT.setText(String.format("Welcome %s", Objects.requireNonNull(auth.getCurrentUser().getEmail()).split("@")[0]));
             loginTXT.setTextColor(ContextCompat.getColor(this, R.color.dark));
             loginTXT.setOnClickListener(null);
         }
     }
 
+    //function to show\hide and enable\disable buttons
     void setPromptState(boolean enabled) {
         reachPlaceBTN.setEnabled(enabled);
         atPlaceBTN.setEnabled(enabled);
@@ -143,17 +142,6 @@ public class MainActivity extends AppCompatActivity {
         textInputLayout = findViewById(R.id.textInputLayout);
         textView3 = findViewById(R.id.textView3);
         loginTXT = findViewById(R.id.Main_TXT_Login);
-    }
-
-
-    public static List<String> getPoiNames() {
-
-        List<String> retList = new ArrayList<>();
-        for(String poi : loc.getPOIs().keySet()) {
-            retList.add(loc.getLocationName() + ", " + poi);
-        }
-
-        return retList;
     }
 
     public static Location getLocation() {

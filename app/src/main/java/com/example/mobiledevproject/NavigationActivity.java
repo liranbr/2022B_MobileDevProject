@@ -6,10 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -18,6 +16,7 @@ import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.mobiledevproject.Objects.Graph;
 import com.example.mobiledevproject.Objects.Location;
+import com.example.mobiledevproject.Utility.FireBaseManager;
 import com.example.mobiledevproject.Utility.UtilityMethods;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
@@ -54,9 +53,9 @@ public class NavigationActivity extends AppCompatActivity {
     List<String> shortestPath = new ArrayList<>();
 
     HashMap<String, Bitmap> waypointImages = new HashMap<>();
-
     Location loc = MainActivity.getLocation();
     Graph<String> waypointsGraph = MainActivity.getGraph();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +74,7 @@ public class NavigationActivity extends AppCompatActivity {
             destinationId = loc.getPOIs().get(destinationPOI);
         }
 
+        // Download indoor view images for all waypoints and load the relevant one into the image view
         FireBaseManager.downloadImages("waypoint-images", (image) -> {
             String[] imageNameParts = image.split("\\.jpg")[0].split("%2F");
             String imageName = imageNameParts[imageNameParts.length - 1];
@@ -85,7 +85,7 @@ public class NavigationActivity extends AppCompatActivity {
                         @Override
                         public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                             waypointImages.put(imageName, resource);
-                            if (imageName.equals(currentWaypoint + "-up"))
+                            if (imageName.equals(currentWaypoint + "-" + directions[currentDirection]))
                                 IndoorView.setImageBitmap(resource);
                         }
 
@@ -98,8 +98,8 @@ public class NavigationActivity extends AppCompatActivity {
         String[] floors = loc.getFloors().split(",");
         int floorCount = floors.length;
 
+        // Setup Toggle Group according to floor amount
         for (int i = 0; i < floorCount; i++) {
-
             MaterialButton mb = new MaterialButton(this);
             mb.setText(floors[i]);
             mb.setTextColor(ContextCompat.getColorStateList(this, R.color.selectable_floor_button_text));
@@ -108,6 +108,7 @@ public class NavigationActivity extends AppCompatActivity {
             toggleGroup.addView(mb, i);
         }
 
+        // Download floor plan images and set the correct one
         FireBaseManager.downloadImages("floor-plans/", (image) -> {
             String floorName = image.split(loc.getLocationName() + "-floor-")[1].split("\\.")[0];
 
@@ -135,6 +136,7 @@ public class NavigationActivity extends AppCompatActivity {
         }
     }
 
+    // Get the current needed step in the found path and highlight the correct arrow
     private void getCurrentStep() {
         leftBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.dark));
         upBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.dark));
@@ -144,6 +146,7 @@ public class NavigationActivity extends AppCompatActivity {
         if(index == -1)
             backBtn.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.green_500));
         else if (index == shortestPath.size() - 1) {
+            // If Reached Destination - Color all the arrows green
             leftBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.green_500));
             upBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.green_500));
             rightBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.green_500));
@@ -160,6 +163,7 @@ public class NavigationActivity extends AppCompatActivity {
         }
     }
 
+    // Check if moved up or down a floor and update accordingly
     void updateFloor() {
         String currentFloor = loc.getWaypointToFloor().get(currentWaypoint);
         for (int i = 0; i < toggleGroup.getChildCount(); i++) {
@@ -185,14 +189,12 @@ public class NavigationActivity extends AppCompatActivity {
     }
 
     void setListeners() {
-
         leftBtn.setOnClickListener(v -> {
             //switch to image left of current image
             rotateImage(-1);
             checkCanMoveForward();
             if(isNavigation)
                 getCurrentStep();
-
         });
 
         rightBtn.setOnClickListener(v -> {
@@ -242,6 +244,7 @@ public class NavigationActivity extends AppCompatActivity {
 
     }
 
+    // Rotate the image, from the current looking direction according to the given direction
     void rotateImage(int direction) {
         currentDirection += direction;
         currentDirection = (((currentDirection % 4) + 4) % 4); //why is modulus actually remainder?
