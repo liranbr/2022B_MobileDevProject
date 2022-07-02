@@ -8,6 +8,8 @@ import androidx.core.content.ContextCompat;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -26,10 +28,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Stack;
 
 public class NavigationActivity extends AppCompatActivity {
 
+    TextToSpeech moshe;
     ImageView IndoorView;
     ImageView floorPlan;
 
@@ -75,6 +79,16 @@ public class NavigationActivity extends AppCompatActivity {
             currentWaypoint = fromWhereId;
             destinationId = loc.getPOIs().get(destinationPOI);
         }
+        moshe=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR) {
+                    moshe.setLanguage(Locale.US);
+                    if (isNavigation)
+                        moshe.speak("Welcome to the navigation screen", TextToSpeech.QUEUE_FLUSH, null, null);
+                }
+            }
+        });
 
         // Download indoor view images for all waypoints and load the relevant one into the image view
         FireBaseManager.downloadImages("waypoint-images", (image) -> {
@@ -122,6 +136,7 @@ public class NavigationActivity extends AppCompatActivity {
             updateFloor();
         });
 
+        checkCanMoveForward();
         if(isNavigation){
             makeShortestPath();
             getCurrentStep();
@@ -141,27 +156,36 @@ public class NavigationActivity extends AppCompatActivity {
     // Get the current needed step in the found path and highlight the correct arrow
     private void getCurrentStep() {
         leftBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.dark));
-        forwardBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.dark));
+        if (forwardBtn.isEnabled())
+            forwardBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.dark));
         rightBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.dark));
         backBtn.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.dark));
         int index = shortestPath.indexOf(currentWaypoint);
-        if(index == -1)
+        if(index == -1) {
             backBtn.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.green_500));
+            moshe.speak("Turn back.", TextToSpeech.QUEUE_FLUSH, null, null);
+        }
         else if (index == shortestPath.size() - 1) {
             // If Reached Destination - Color all the arrows green
             leftBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.green_500));
             forwardBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.green_500));
             rightBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.green_500));
             backBtn.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.green_500));
+            moshe.speak("You have reached your destination!", TextToSpeech.QUEUE_FLUSH, null, null);
         }
         else {
             String stepDirection = shortestPathDirections[index];
-            if(stepDirection.equals(directions[currentDirection]))
+            if(stepDirection.equals(directions[currentDirection])) {
                 forwardBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.green_500));
-            else if(stepDirection.equals(directions[(currentDirection + 1) % 4]))
+            }
+            else if(stepDirection.equals(directions[(currentDirection + 1) % 4])) {
                 rightBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.green_500));
-            else
+                moshe.speak("Turn right.", TextToSpeech.QUEUE_FLUSH, null, null);
+            }
+            else {
                 leftBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.green_500));
+                moshe.speak("Turn left.", TextToSpeech.QUEUE_FLUSH, null, null);
+            }
         }
     }
 
