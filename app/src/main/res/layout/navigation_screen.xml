@@ -9,12 +9,39 @@
     android:orientation="vertical"
     android:id="@+id/Navigation_LLO_screen">
 
-    <ImageView
-        android:id="@+id/Navigation_IMG_Indoor"
+    <ViewFlipper
         android:layout_width="match_parent"
-        android:layout_height="231sp"
-        android:adjustViewBounds="true"
-        android:background="@color/med_darker" />
+        android:layout_height="wrap_content"
+        android:id="@+id/Navigation_VF_Indoor"
+        android:background="@color/white"
+        android:inAnimation="@android:anim/slide_in_left">
+
+        <ImageView
+            android:id="@+id/Navigation_IMG_Indoor_up"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/compus_background"
+            android:adjustViewBounds="true" />
+        <ImageView
+            android:id="@+id/Navigation_IMG_Indoor_right"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/compus_background"
+            android:adjustViewBounds="true" />
+        <ImageView
+            android:id="@+id/Navigation_IMG_Indoor_down"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/compus_background"
+            android:adjustViewBounds="true" />
+        <ImageView
+            android:id="@+id/Navigation_IMG_Indoor_left"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/compus_background"
+            android:adjustViewBounds="true" />
+
+    </ViewFlipper>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

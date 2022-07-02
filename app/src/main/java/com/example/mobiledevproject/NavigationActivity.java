@@ -13,6 +13,7 @@ import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
@@ -35,7 +36,9 @@ import java.util.Stack;
 public class NavigationActivity extends AppCompatActivity {
 
     TextToSpeech moshe;
-    ImageView IndoorView;
+    ImageView[] IndoorViews;
+    ViewFlipper viewFlipper;
+
     ImageView floorPlan;
 
     ImageButton backBtn;
@@ -103,8 +106,10 @@ public class NavigationActivity extends AppCompatActivity {
                         @Override
                         public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                             waypointImages.put(imageName, resource);
-                            if (imageName.equals(currentWaypoint + "-" + directions[currentDirection]))
-                                IndoorView.setImageBitmap(resource);
+                            String[] innerImageNameParts = imageName.split("-");
+                            String imageDirection = innerImageNameParts[innerImageNameParts.length - 1];
+                            if (imageName.contains(currentWaypoint))
+                                IndoorViews[Arrays.asList(directions).indexOf(imageDirection)].setImageBitmap(resource);
                         }
 
                         @Override
@@ -240,7 +245,7 @@ public class NavigationActivity extends AppCompatActivity {
             if (nextVertex != null) {
                 String nextImageName = nextVertex + "-" + directions[currentDirection];
                 if (waypointImages.containsKey(nextImageName)) {
-                    IndoorView.setImageBitmap(waypointImages.get(nextImageName));
+//                    IndoorView.setImageBitmap(waypointImages.get(nextImageName)); TODO
                     previousWaypoints.add(currentWaypoint); //add current waypoint to the stack of previous waypoints
                     currentWaypoint = nextVertex;
                 }
@@ -256,7 +261,7 @@ public class NavigationActivity extends AppCompatActivity {
             if(previousWaypoints.size() > 0) {
                 String previousImageName = previousWaypoints.peek() + "-" + directions[currentDirection];
                 if (waypointImages.containsKey(previousImageName)) {
-                    IndoorView.setImageBitmap(waypointImages.get(previousImageName));
+//                    IndoorView.setImageBitmap(waypointImages.get(previousImageName)); TODO
                     currentWaypoint = previousWaypoints.pop();
                 }
             }
@@ -280,12 +285,20 @@ public class NavigationActivity extends AppCompatActivity {
         currentDirection = (((currentDirection % 4) + 4) % 4); //why is modulus actually remainder?
         String imageName = currentWaypoint + "-" + directions[currentDirection];
         if (waypointImages.containsKey(imageName)) {
-            IndoorView.setImageBitmap(waypointImages.get(imageName));
+            if (direction == 1) {
+                viewFlipper.setInAnimation(this, R.anim.slide_in_right);
+                viewFlipper.setOutAnimation(this, R.anim.slide_out_left);
+                viewFlipper.showNext();
+            }
+            else {
+                viewFlipper.setInAnimation(this, android.R.anim.slide_in_left);
+                viewFlipper.setOutAnimation(this, android.R.anim.slide_out_right);
+                viewFlipper.showPrevious();
+            }
         }
     }
 
     void findViews() {
-        IndoorView = findViewById(R.id.Navigation_IMG_Indoor);
         floorPlan = findViewById(R.id.Navigation_IMG_Floor);
         backBtn = findViewById(R.id.Navigation_IMGBTN_back);
         leftBtn = findViewById(R.id.Navigation_IMGBTN_left);
@@ -293,5 +306,10 @@ public class NavigationActivity extends AppCompatActivity {
         rightBtn = findViewById(R.id.Navigation_IMGBTN_right);
         reportBTN = findViewById(R.id.Navigation_FAB_report);
         toggleGroup = findViewById(R.id.Navigation_MBTG_navigation);
+        IndoorViews = new ImageView[]{findViewById(R.id.Navigation_IMG_Indoor_up),
+                findViewById(R.id.Navigation_IMG_Indoor_right),
+                findViewById(R.id.Navigation_IMG_Indoor_down),
+                findViewById(R.id.Navigation_IMG_Indoor_left)};
+        viewFlipper = findViewById(R.id.Navigation_VF_Indoor);
     }
 }
